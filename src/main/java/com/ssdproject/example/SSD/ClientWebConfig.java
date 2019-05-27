@@ -15,7 +15,9 @@ public class ClientWebConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
+
         registry.addViewController("/index");
+        registry.addViewController("/login.html");
     }
 
     @Bean

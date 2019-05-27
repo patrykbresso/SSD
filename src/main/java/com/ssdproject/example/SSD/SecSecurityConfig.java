@@ -13,7 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 @Configuration
-@ImportResource({ "classpath:webSecurityConfig.xml" }) // to
+//@ImportResource({ "classpath:webSecurityConfig.xml" }) // to
 @EnableWebSecurity
 public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -46,7 +46,7 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login.html")
                 .loginProcessingUrl("/perform_login")
                 .defaultSuccessUrl("/homepage.html", true)
-                //.failureUrl("/login.html?error=true")
+                .failureUrl("/login.html?error=true")
                 //.failureHandler(authenticationFailureHandler())
                 .and()
                 .logout()
@@ -54,8 +54,6 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
                 .deleteCookies("JSESSIONID");
                 //.logoutSuccessHandler(logoutSuccessHandler());
     }
-
-
 
     @Bean
     public PasswordEncoder passwordEncoder() {
