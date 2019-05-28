@@ -5,6 +5,7 @@ import com.ssdproject.example.SSD.auth.model.entity.RoleEntity;
 import com.ssdproject.example.SSD.auth.model.entity.UserEntity;
 import com.ssdproject.example.SSD.auth.model.entity.users.AuthorEntity;
 import com.ssdproject.example.SSD.auth.model.entity.users.GuestEntity;
+import com.ssdproject.example.SSD.auth.model.enums.LoginType;
 import com.ssdproject.example.SSD.auth.model.enums.UserRoleName;
 import com.ssdproject.example.SSD.auth.model.to.LoginTo;
 import com.ssdproject.example.SSD.auth.model.to.RegisterTO;
@@ -69,6 +70,15 @@ public class AuthServiceImpl {
     }
 
     public ResponseEntity<?> login(LoginTo loginRequest) {
+        UserEntity userEntity = userDaoWrapper.findByEmail(loginRequest.getEmail());
+        if (userEntity == null) {
+            return new ResponseEntity<>(new ResponseTO("User with provided email not found in the system."), HttpStatus.BAD_REQUEST);
+        }
+        if (userEntity.getRole().getName() != mapToRole(loginRequest.getLoginType())) {
+            String msg = String.format("User with provided email cannot log in as %s.", loginRequest.getLoginType().name().toLowerCase());
+            return new ResponseEntity<>(new ResponseTO(msg), HttpStatus.BAD_REQUEST);
+        }
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
@@ -78,5 +88,19 @@ public class AuthServiceImpl {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         return ResponseEntity.ok(new JwtResponseTO(jwt, userDetails.getUsername(), userDetails.getAuthorities()));
+    }
+
+    private UserRoleName mapToRole(LoginType loginType) {
+        switch (loginType) {
+            case AUTHOR:
+                return UserRoleName.ROLE_AUTHOR;
+            case GUEST:
+                return UserRoleName.ROLE_GUEST;
+            case ORGANISER:
+                return UserRoleName.ROLE_ORGANISER;
+            case REVIEWER:
+                return UserRoleName.ROLE_REVIEWER;
+        }
+        return null;
     }
 }

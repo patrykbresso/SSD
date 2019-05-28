@@ -1,5 +1,6 @@
 package com.ssdproject.example.SSD.auth.model.to;
 
+import com.ssdproject.example.SSD.auth.model.enums.LoginType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,4 +10,5 @@ public class LoginTo {
 
     private String email;
     private String password;
+    private LoginType loginType;
 }

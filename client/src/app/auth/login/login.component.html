@@ -6,6 +6,11 @@
     <input type="password" class="fortextbox" name="passwd" placeholder="Password" formControlName="password">
     <br />
 
+    <select name="loginAs" formControlName="loginAs">
+      <option *ngFor="let log of logAs" [value]="log" [label]="loginAsEnum[log]"></option>
+    </select>
+    <br>
+
     <input [disabled]="!loginForm.valid" type="submit" class="forsubmit" value="Log In">
   </form>
 </div>

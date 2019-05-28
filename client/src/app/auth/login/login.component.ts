@@ -4,6 +4,7 @@ import { JwtResponseTO } from './../model/jwt-response-to';
 import { LoginTO } from './../model/login-to';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LoginAs } from '../model/login-as';
 
 @Component({
   selector: 'app-login',
@@ -13,11 +14,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
+  loginAsEnum = LoginAs;
+  logAs: string[];
 
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly authService: AuthService,
-    private readonly authStorageService: AuthStorageService) { }
+    private readonly authStorageService: AuthStorageService) {
+    this.logAs = Object.keys(this.loginAsEnum).filter(f => !isNaN(Number(f)));
+  }
 
   ngOnInit() {
     this.initForm();
@@ -28,7 +33,8 @@ export class LoginComponent implements OnInit {
 
       const loginData: LoginTO = {
         email: this.loginForm.controls['email'].value,
-        password: this.loginForm.controls['password'].value
+        password: this.loginForm.controls['password'].value,
+        loginType: this.loginForm.controls['loginAs'].value
       }
 
       this.authService.login(loginData)
@@ -43,7 +49,8 @@ export class LoginComponent implements OnInit {
   private initForm() {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(60)]],
-      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(40)]]
+      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(40)]],
+      loginAs: [LoginAs.AUTHOR, [Validators.required]]
     });
   }
 }

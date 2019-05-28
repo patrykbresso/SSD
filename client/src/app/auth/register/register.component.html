@@ -16,6 +16,7 @@
     <select name="registerAs" formControlName="registerAs">
       <option *ngFor="let reg of regAs" [value]="reg" [label]="retisterAsEnum[reg]"></option>
     </select>
+    <br>
 
     <input [disabled]="!registerForm.valid" type="submit" class="forsubmit" value="Register">
   </form>
