@@ -14,11 +14,9 @@ import { AuthStorageService } from './auth/service/auth-storage.service';
 import { ConferenceDetailsComponent } from './conference/conference-details/conference-details.component';
 import { ConferencesOverviewComponent } from './conference/conferences-overview/conferences-overview.component';
 import { PaymentComponent } from './payment/payment.component';
-import { RegisterExhItemComponent } from './register-exh-item/register-exh-item.component';
 import { ReviewComponent } from './review/review.component';
-import { UploadComponent } from './upload/upload.component';
-import { UploadPosterComponent } from './upload-poster/upload-poster.component';
 import { UploadPresentationComponent } from './register-exh-item/upload-presentation/upload-presentation.component';
+import {UploadPosterComponent} from "./register-exh-item/upload-poster/upload-poster.component";
 
 
 @NgModule({
@@ -29,9 +27,7 @@ import { UploadPresentationComponent } from './register-exh-item/upload-presenta
     ConferenceDetailsComponent,
     ConferencesOverviewComponent,
     PaymentComponent,
-    RegisterExhItemComponent,
     ReviewComponent,
-    UploadComponent,
     UploadPosterComponent,
     UploadPresentationComponent
   ],
