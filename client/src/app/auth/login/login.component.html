@@ -1,17 +1,23 @@
-<div>
+<div class="login-form">
   <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
-    <input type="email" class="fortextbox" name="emailid" placeholder="Email" formControlName="email">
-    <br />
+    <h2 class="text-center">Log in</h2>
+    <div class="form-group">
+      <input type="email" class="form-control" name="emailid" placeholder="Email" formControlName="email"
+             required="required">
+    </div>
+    <div class="form-group">
+      <input type="password" class="form-control" name="passwd" placeholder="Password" formControlName="password"
+             required="required">
+    </div>
 
-    <input type="password" class="fortextbox" name="passwd" placeholder="Password" formControlName="password">
-    <br />
-
-    <select name="loginAs" formControlName="loginAs">
-      <option *ngFor="let log of logAs" [value]="log" [label]="loginAsEnum[log]"></option>
-    </select>
-    <br>
-
-    <input [disabled]="!loginForm.valid" type="submit" class="forsubmit" value="Log In">
+    <div class="form-group">
+      <select name="loginAs" formControlName="loginAs">
+        <option *ngFor="let log of logAs" [value]="log" [label]="loginAsEnum[log]"></option>
+      </select>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary btn-block" [disabled]="!loginForm.valid">Log in</button>
+    </div>
   </form>
 </div>
-<a [routerLink]="['/register']" routerLinkActive="active">Register</a>
+<p class="text-center"><a [routerLink]="['/register']" routerLinkActive="active">Register</a></p>
