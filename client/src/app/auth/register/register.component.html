@@ -1,0 +1,22 @@
+<div>
+  <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+    <input type="text" class="fortextbox" name="name" placeholder="Name" formControlName="name">
+    <br />
+    <input type="text" class="fortextbox" name="surname" placeholder="Surname" formControlName="surname">
+    <br />
+    <input type="email" class="fortextbox" name="emailid" placeholder="Email" formControlName="email">
+    <br />
+
+    <input type="password" class="fortextbox" name="passwd" placeholder="Password" formControlName="password">
+    <br />
+    <input type="password" class="fortextbox" name="passwordConfirm" placeholder="Password Confirmation"
+      formControlName="passwordConfirm">
+    <br />
+
+    <select name="registerAs" formControlName="registerAs">
+      <option *ngFor="let reg of regAs" [value]="reg" [label]="retisterAsEnum[reg]"></option>
+    </select>
+
+    <input [disabled]="!registerForm.valid" type="submit" class="forsubmit" value="Register">
+  </form>
+</div>

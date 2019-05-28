@@ -1,0 +1,12 @@
+<div>
+  <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+    <input type="email" class="fortextbox" name="emailid" placeholder="Email" formControlName="email">
+    <br />
+
+    <input type="password" class="fortextbox" name="passwd" placeholder="Password" formControlName="password">
+    <br />
+
+    <input [disabled]="!loginForm.valid" type="submit" class="forsubmit" value="Log In">
+  </form>
+</div>
+<a [routerLink]="['/register']" routerLinkActive="active">Register</a>
