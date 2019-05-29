@@ -1,6 +1,6 @@
 package com.ssdproject.example.SSD.auth.endpoint;
 
-import com.ssdproject.example.SSD.auth.model.to.LoginTo;
+import com.ssdproject.example.SSD.auth.model.to.LoginTO;
 import com.ssdproject.example.SSD.auth.model.to.RegisterTO;
 import com.ssdproject.example.SSD.auth.service.AuthServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class AuthRest {
     private AuthServiceImpl authService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> authenticate(@Valid @RequestBody LoginTo loginRequest) {
+    public ResponseEntity<?> authenticate(@Valid @RequestBody LoginTO loginRequest) {
         ResponseEntity<?> response = authService.login(loginRequest);
         return response;
     }

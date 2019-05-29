@@ -7,7 +7,7 @@ import com.ssdproject.example.SSD.auth.model.entity.users.AuthorEntity;
 import com.ssdproject.example.SSD.auth.model.entity.users.GuestEntity;
 import com.ssdproject.example.SSD.auth.model.enums.LoginType;
 import com.ssdproject.example.SSD.auth.model.enums.UserRoleName;
-import com.ssdproject.example.SSD.auth.model.to.LoginTo;
+import com.ssdproject.example.SSD.auth.model.to.LoginTO;
 import com.ssdproject.example.SSD.auth.model.to.RegisterTO;
 import com.ssdproject.example.SSD.config.security.jwt.JwtProvider;
 import com.ssdproject.example.SSD.shared.model.to.JwtResponseTO;
@@ -69,7 +69,7 @@ public class AuthServiceImpl {
         userDaoWrapper.saveOrUpdate(user);
     }
 
-    public ResponseEntity<?> login(LoginTo loginRequest) {
+    public ResponseEntity<?> login(LoginTO loginRequest) {
         UserEntity userEntity = userDaoWrapper.findByEmail(loginRequest.getEmail());
         if (userEntity == null) {
             return new ResponseEntity<>(new ResponseTO("User with provided email not found in the system."), HttpStatus.BAD_REQUEST);
