@@ -23,7 +23,7 @@ public class AddressEntity extends AbstractEntity {
     @Column(nullable = false)
     private String streetNumber;
 
-    @Column(nullable = false)
+    @Column
     private String description;
 
     @Enumerated(EnumType.STRING)

@@ -29,7 +29,7 @@ public class ScheduleItemEntity extends AbstractEntity {
     @Column(nullable = false)
     private LocalDateTime endDate;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<PosterEntity> posters;
 
     @OneToOne
