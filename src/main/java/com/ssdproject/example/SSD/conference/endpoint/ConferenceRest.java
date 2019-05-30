@@ -1,6 +1,7 @@
 package com.ssdproject.example.SSD.conference.endpoint;
 
 import com.ssdproject.example.SSD.conference.model.to.ConferenceTO;
+import com.ssdproject.example.SSD.conference.model.to.SimpleConferenceTO;
 import com.ssdproject.example.SSD.conference.service.ConferenceServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ public class ConferenceRest {
 
     @GetMapping("/all")
     public ResponseEntity<?> getAll() {
-        List<ConferenceTO> conferences = conferenceService.getAll();
+        List<SimpleConferenceTO> conferences = conferenceService.getAll();
         return new ResponseEntity<>(conferences, HttpStatus.OK);
     }
 

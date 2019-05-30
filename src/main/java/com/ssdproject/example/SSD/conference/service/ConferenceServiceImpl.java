@@ -3,6 +3,7 @@ package com.ssdproject.example.SSD.conference.service;
 import com.ssdproject.example.SSD.conference.dao.ConferenceDao;
 import com.ssdproject.example.SSD.conference.model.entity.ConferenceEntity;
 import com.ssdproject.example.SSD.conference.model.to.ConferenceTO;
+import com.ssdproject.example.SSD.conference.model.to.SimpleConferenceTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,9 +29,12 @@ public class ConferenceServiceImpl {
         return null;
     }
 
-    public List<ConferenceTO> getAll() {
+    public List<SimpleConferenceTO> getAll() {
         List<ConferenceEntity> conferenceEntities = conferenceDao.findAll();
-        return conferenceEntities.stream().map(this::mapToTO).collect(Collectors.toList());
+        return conferenceEntities.stream().map(entity -> {
+            ConferenceTO conference = mapToTO(entity);
+            return modelMapper.map(conference, SimpleConferenceTO.class);
+        }).collect(Collectors.toList());
     }
 
     private ConferenceTO mapToTO(ConferenceEntity entity) {
