@@ -20,6 +20,6 @@ public class ScheduleEntity extends AbstractEntity {
     @Column
     private ScheduleStatus status = ScheduleStatus.IN_PROGRESS;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<ScheduleItemEntity> presentationsAndPosters;
 }

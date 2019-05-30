@@ -1,19 +1,31 @@
 package com.ssdproject.example.SSD.conference.model.to;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ssdproject.example.SSD.auth.model.to.AuthorTO;
+import com.ssdproject.example.SSD.auth.model.to.GuestTO;
+import com.ssdproject.example.SSD.auth.model.to.OrganiserTO;
+import com.ssdproject.example.SSD.schedule.model.to.ScheduleTO;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-@Data
+@Getter
+@Setter
 public class ConferenceTO {
 
+    private Long id;
     private LocalDateTime startDate;
-
     private LocalDateTime endDate;
-
     private LocalDateTime registrationDate;
-
     private boolean cancelled = false;
-
-    private ConferenceInformationTO conferenceInformationEntity;
+    private ConferenceInformationTO conferenceInformation;
+    private ScheduleTO schedule;
+    private AddressTO address;
+    @JsonIgnore
+    private List<AuthorTO> authors;
+    private List<OrganiserTO> organisers;
+    @JsonIgnore
+    private List<GuestTO> guests;
 }

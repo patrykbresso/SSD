@@ -15,11 +15,5 @@ public abstract class AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Version
-    private Long version;
-
-    @CreationTimestamp
-    private LocalDateTime creationTime;
 }
 
