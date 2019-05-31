@@ -1,6 +1,7 @@
 package com.ssdproject.example.SSD.schedule.model.entity;
 
 import com.ssdproject.example.SSD.shared.model.entity.AbstractEntity;
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
+@Builder
 @Entity
 @Table(name = "schedule_items")
 public class ScheduleItemEntity extends AbstractEntity {

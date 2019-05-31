@@ -42,9 +42,8 @@ public class ConferenceServiceImpl {
         int numberSeatsLeft = entity.getGuests() != null ?
                 entity.getConferenceInformation().getMaxNumberOfSeats() - entity.getGuests().size() :
                 entity.getConferenceInformation().getMaxNumberOfSeats();
-        int numberPresentationsLeft = entity.getAuthors() != null ?
-                entity.getConferenceInformation().getMaxNumberOfPresentations() - entity.getAuthors().size() :
-                entity.getConferenceInformation().getMaxNumberOfPresentations();
+        // dopisac metode to tego
+        int numberPresentationsLeft = entity.getConferenceInformation().getMaxNumberOfPresentations();
 
         conference.getConferenceInformation().setAvailableNumberOfPresentations(numberPresentationsLeft);
         conference.getConferenceInformation().setAvailableSeats(numberSeatsLeft);

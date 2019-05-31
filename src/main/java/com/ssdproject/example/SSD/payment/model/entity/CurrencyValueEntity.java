@@ -3,12 +3,14 @@ package com.ssdproject.example.SSD.payment.model.entity;
 import com.ssdproject.example.SSD.payment.model.enums.Currency;
 import com.ssdproject.example.SSD.payment.model.enums.ValueType;
 import com.ssdproject.example.SSD.shared.model.entity.AbstractEntity;
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Data
+@Builder
 @Entity
 @Table(name = "currency_value")
 public class CurrencyValueEntity extends AbstractEntity {

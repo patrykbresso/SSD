@@ -1,7 +1,7 @@
 package com.ssdproject.example.SSD.auth.model.entity;
 
 import com.ssdproject.example.SSD.shared.model.entity.AbstractEntity;
-import lombok.Data;
+import lombok.*;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
@@ -9,7 +9,11 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+@Getter
+@Setter
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @MappedSuperclass
 @Table(uniqueConstraints = {
         @UniqueConstraint(columnNames = {
