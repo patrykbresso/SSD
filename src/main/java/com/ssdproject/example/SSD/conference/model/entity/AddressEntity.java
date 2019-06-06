@@ -2,13 +2,17 @@ package com.ssdproject.example.SSD.conference.model.entity;
 
 import com.ssdproject.example.SSD.conference.model.enums.Country;
 import com.ssdproject.example.SSD.shared.model.entity.AbstractEntity;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "address")
 public class AddressEntity extends AbstractEntity {
@@ -27,18 +31,6 @@ public class AddressEntity extends AbstractEntity {
 
     @Column
     private String description;
-
-    public AddressEntity(String city, String postalCode, String street, String streetNumber, String description, Country country) {
-        this.city = city;
-        this.postalCode = postalCode;
-        this.street = street;
-        this.streetNumber = streetNumber;
-        this.description = description;
-        this.country = country;
-    }
-
-    public AddressEntity() {
-    }
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

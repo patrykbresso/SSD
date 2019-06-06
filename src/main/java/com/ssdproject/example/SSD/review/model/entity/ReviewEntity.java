@@ -34,7 +34,7 @@ public class ReviewEntity extends AbstractEntity {
     @Column(nullable = false)
     private LocalDateTime reviewDueDate;
 
-    @Column(nullable = false)
+    @Column
     private LocalDateTime reviewFinishDate;
 
     @OneToMany(cascade = CascadeType.ALL)

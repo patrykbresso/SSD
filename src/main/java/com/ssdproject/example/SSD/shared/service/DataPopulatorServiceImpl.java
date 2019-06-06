@@ -15,9 +15,14 @@ import com.ssdproject.example.SSD.conference.model.entity.AddressEntity;
 import com.ssdproject.example.SSD.conference.model.entity.ConferenceEntity;
 import com.ssdproject.example.SSD.conference.model.entity.ConferenceInformationEntity;
 import com.ssdproject.example.SSD.conference.model.enums.Country;
+import com.ssdproject.example.SSD.payment.dao.AuthorPaymentDao;
 import com.ssdproject.example.SSD.payment.dao.CurrencyValueDao;
+import com.ssdproject.example.SSD.payment.dao.GuestPaymentDao;
+import com.ssdproject.example.SSD.payment.model.entity.AuthorPaymentEntity;
 import com.ssdproject.example.SSD.payment.model.entity.CurrencyValueEntity;
+import com.ssdproject.example.SSD.payment.model.entity.GuestPaymentEntity;
 import com.ssdproject.example.SSD.payment.model.enums.Currency;
+import com.ssdproject.example.SSD.payment.model.enums.PaymentStatus;
 import com.ssdproject.example.SSD.payment.model.enums.ValueType;
 import com.ssdproject.example.SSD.review.dao.RemarkDao;
 import com.ssdproject.example.SSD.review.dao.ReviewDao;
@@ -35,9 +40,12 @@ import com.ssdproject.example.SSD.schedule.model.entity.ScheduleItemEntity;
 import com.ssdproject.example.SSD.schedule.model.enums.ScheduleStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -73,6 +81,10 @@ public class DataPopulatorServiceImpl {
     private AuthorDao authorDao;
     @Autowired
     private ReviewerDao reviewerDao;
+    @Autowired
+    private AuthorPaymentDao authorPaymentDao;
+    @Autowired
+    private GuestPaymentDao guestPaymentDao;
 
     private RoleEntity roleOrganiser;
     private RoleEntity roleGuest;
@@ -83,13 +95,76 @@ public class DataPopulatorServiceImpl {
     private CurrencyValueEntity pricePlnStandard;
     private CurrencyValueEntity pricePLNVip;
 
-    public void populateDataBase() {
+    @Transactional
+    public void saveRolesAndCurrencies() {
         saveRoles();
-        saveCurrency();
+        saveCurrencies();
     }
 
-    public ConferenceEntity buildConference() {
-        return null;
+    @Transactional
+    public void populateDataBase() {
+        saveRolesAndCurrencies();
+
+        saveConferenceWithAllData();
+    }
+
+    public void saveConferenceWithAllData() {
+        OrganiserEntity organiser = saveOrganiser("Jan", "organiser@gmail.com", "Kowalski", new ArrayList<>());
+        ReviewerEntity reviewer = saveReviewer("Andrzej", "reviewer@gmail.com", "Strzelba", AcademicTitle.PROFESSOR, new ArrayList<>());
+
+        AddressEntity conferenceAddress = saveAddress("Wroclaw", "55-125", "Ulica", "12", Country.POL);
+        ConferenceInformationEntity conferenceInformation = saveConferenceInformation("Machine Learning", "Description 1", 8, 100);
+
+        ScheduleEntity conferenceSchedule = saveSchedule(ScheduleStatus.IN_PROGRESS, new ArrayList<>());
+
+        ConferenceEntity conference = saveConference(LocalDateTime.of(2019, 7, 1, 8, 0), LocalDateTime.of(2019, 7, 1, 16, 0), LocalDateTime.of(2019, 6, 15, 23, 59),
+                conferenceInformation, Arrays.asList(organiser), new ArrayList<>(), new ArrayList<>(), conferenceSchedule, conferenceAddress);
+        organiser.setConferences(Arrays.asList(conference));
+
+        // guests
+        GuestEntity guest1 = saveGuest("Jan", "guest1@gmail.com", "Kowalski", Arrays.asList(conference));
+        saveGuestPayment(PaymentStatus.ACCEPTED, LocalDateTime.of(2019, 6, 15, 23, 59), LocalDateTime.of(2019, 6, 1, 23, 59), null, pricePlnStandard, guest1, conference);
+        GuestEntity guest2 = saveGuest("Jan", "guest2@gmail.com", "Kowalski", Arrays.asList(conference));
+        saveGuestPayment(PaymentStatus.ACCEPTED, LocalDateTime.of(2019, 6, 15, 23, 59), LocalDateTime.of(2019, 6, 1, 23, 59), null, pricePLNVip, guest2, conference);
+        GuestEntity guest3 = saveGuest("Jan", "guest3@gmail.com", "Kowalski", Arrays.asList(conference));
+        saveGuestPayment(PaymentStatus.NEW, LocalDateTime.of(2019, 6, 15, 23, 59), null, null, pricePlnStudent, guest3, conference);
+
+        // authors and conference items
+        AuthorEntity author1 = saveAuthor("Andrzej", "author1@gmail.com", "Strzelba", AcademicTitle.DOCTOR, Arrays.asList(conference));
+        saveAuthorPayment(PaymentStatus.ACCEPTED, LocalDateTime.of(2019, 6, 15, 23, 59), LocalDateTime.of(2019, 6, 1, 23, 59), null, pricePlnStandard, author1, conference);
+        PresentationEntity presentation1 = savePresentation("ML Pres title", "description 1", "http://dsadasda", LocalDateTime.of(2019, 6, 1, 8, 0), Arrays.asList(author1));
+        saveReview(reviewer, null, presentation1, ReviewStatus.PASSED, LocalDateTime.of(2019, 6, 10, 23, 59),
+                LocalDateTime.of(2019, 6, 1, 23, 59), new ArrayList<>());
+
+
+        AuthorEntity author2 = saveAuthor("Andrzej", "author2@gmail.com", "Strzelba", AcademicTitle.DOCTOR, Arrays.asList(conference));
+        saveAuthorPayment(PaymentStatus.ACCEPTED, LocalDateTime.of(2019, 6, 15, 23, 59), LocalDateTime.of(2019, 6, 1, 23, 59), null, pricePlnStandard, author2, conference);
+        PresentationEntity presentation2 = savePresentation("ML Presdsadas title", "description 1", "http://dsadsadsadas", LocalDateTime.of(2019, 6, 1, 8, 0), Arrays.asList(author2));
+        saveReview(reviewer, null, presentation2, ReviewStatus.NOT_REVIEWED,
+                LocalDateTime.of(2019, 6, 10, 23, 59), null, new ArrayList<>());
+
+        AuthorEntity author3 = saveAuthor("Andrzej", "author3@gmail.com", "Strzelba", AcademicTitle.DOCTOR, Arrays.asList(conference));
+        saveAuthorPayment(PaymentStatus.ACCEPTED, LocalDateTime.of(2019, 6, 15, 23, 59), LocalDateTime.of(2019, 6, 1, 23, 59), null, pricePlnStandard, author3, conference);
+        PosterEntity poster1 = savePoster("ML Presdsadas title", "description 1", "http://dsadsadsadas", LocalDateTime.of(2019, 6, 1, 8, 0), Arrays.asList(author3));
+        saveReview(reviewer, poster1, null, ReviewStatus.PASSED, LocalDateTime.of(2019, 6, 10, 23, 59),
+                LocalDateTime.of(2019, 6, 1, 23, 59), new ArrayList<>());
+
+        AuthorEntity author4 = saveAuthor("Andrzej", "author4@gmail.com", "Strzelba", AcademicTitle.DOCTOR, Arrays.asList(conference));
+        saveAuthorPayment(PaymentStatus.ACCEPTED, LocalDateTime.of(2019, 6, 15, 23, 59), LocalDateTime.of(2019, 6, 1, 23, 59), null, pricePlnStandard, author4, conference);
+        PosterEntity poster2 = savePoster("ML Presdsadas title", "description 1", "http://dsadsadsadas", LocalDateTime.of(2019, 6, 1, 8, 0), Arrays.asList(author4));
+        saveReview(reviewer, poster2, null, ReviewStatus.PASSED, LocalDateTime.of(2019, 6, 10, 23, 59),
+                LocalDateTime.of(2019, 6, 1, 23, 59), new ArrayList<>());
+
+        // creating schedule
+        ScheduleItemEntity posters = saveScheduleItem("Poster session", "Poster session description", "", LocalDateTime.of(2019, 7, 1, 8, 0),
+                LocalDateTime.of(2019, 7, 1, 16, 0), Arrays.asList(poster1, poster2), null);
+
+        ScheduleItemEntity presentationSchedule1 = saveScheduleItem(presentation1.getTitle(), presentation1.getDescription(), "", LocalDateTime.of(2019, 7, 1, 8, 0),
+                LocalDateTime.of(2019, 7, 1, 9, 0), null, presentation1);
+        ScheduleItemEntity presentationSchedule2 = saveScheduleItem(presentation2.getTitle(), presentation2.getDescription(), "", LocalDateTime.of(2019, 7, 1, 9, 0),
+                LocalDateTime.of(2019, 7, 1, 10, 0), null, presentation2);
+
+        conferenceSchedule.setPresentationsAndPosters(Arrays.asList(posters, presentationSchedule1, presentationSchedule2));
     }
 
     public RemarkEntity saveRemark(String remark) {
@@ -118,12 +193,12 @@ public class DataPopulatorServiceImpl {
         return scheduleItemDao.save(buildScheduleItem(topic, description, localizationDetail, startDate, endDate, posters, presentation));
     }
 
-    public PresentationEntity savePresentation(String title, String url, LocalDateTime fileAttachingDate, List<AuthorEntity> authors) {
-        return presentationDao.save(buildPresentation(title, url, fileAttachingDate, authors));
+    public PresentationEntity savePresentation(String title, String description, String url, LocalDateTime fileAttachingDate, List<AuthorEntity> authors) {
+        return presentationDao.save(buildPresentation(title, description, url, fileAttachingDate, authors));
     }
 
-    public PosterEntity savePoster(String title, String url, LocalDateTime fileAttachingDate, List<AuthorEntity> authors) {
-        return posterDao.save(buildPoster(title, url, fileAttachingDate, authors));
+    public PosterEntity savePoster(String title, String description, String url, LocalDateTime fileAttachingDate, List<AuthorEntity> authors) {
+        return posterDao.save(buildPoster(title, description, url, fileAttachingDate, authors));
     }
 
     public ScheduleEntity saveSchedule(ScheduleStatus status, List<ScheduleItemEntity> presentationsAndPosters) {
@@ -148,6 +223,16 @@ public class DataPopulatorServiceImpl {
 
     public ReviewerEntity saveReviewer(String name, String email, String surname, AcademicTitle academicTitle, List<ConferenceEntity> conferences) {
         return reviewerDao.save(buildReviewer(name, email, surname, academicTitle, conferences));
+    }
+
+    public AuthorPaymentEntity saveAuthorPayment(PaymentStatus status, LocalDateTime dueDate, LocalDateTime paymentDate,
+                                                 LocalDateTime returnDate, CurrencyValueEntity currencyValue, AuthorEntity author, ConferenceEntity conference) {
+        return authorPaymentDao.save(buildAuthorPayment(status, dueDate, paymentDate, returnDate, currencyValue, author, conference));
+    }
+
+    public GuestPaymentEntity saveGuestPayment(PaymentStatus status, LocalDateTime dueDate, LocalDateTime paymentDate,
+                                               LocalDateTime returnDate, CurrencyValueEntity currencyValue, GuestEntity guest, ConferenceEntity conference) {
+        return guestPaymentDao.save(buildGuestPayment(status, dueDate, paymentDate, returnDate, currencyValue, guest, conference));
     }
 
     public RemarkEntity buildRemark(String remark) {
@@ -181,12 +266,12 @@ public class DataPopulatorServiceImpl {
                 .posters(posters).presentation(presentation).build();
     }
 
-    public PresentationEntity buildPresentation(String title, String url, LocalDateTime fileAttachingDate, List<AuthorEntity> authors) {
-        return PresentationEntity.builder().authors(authors).fileAttachingDate(fileAttachingDate).url(url).title(title).build();
+    public PresentationEntity buildPresentation(String title, String description, String url, LocalDateTime fileAttachingDate, List<AuthorEntity> authors) {
+        return PresentationEntity.builder().description(description).authors(authors).fileAttachingDate(fileAttachingDate).url(url).title(title).build();
     }
 
-    public PosterEntity buildPoster(String title, String url, LocalDateTime fileAttachingDate, List<AuthorEntity> authors) {
-        return PosterEntity.builder().authors(authors).fileAttachingDate(fileAttachingDate).url(url).title(title).build();
+    public PosterEntity buildPoster(String title, String description, String url, LocalDateTime fileAttachingDate, List<AuthorEntity> authors) {
+        return PosterEntity.builder().description(description).authors(authors).fileAttachingDate(fileAttachingDate).url(url).title(title).build();
     }
 
     public ScheduleEntity buildSchedule(ScheduleStatus status, List<ScheduleItemEntity> presentationsAndPosters) {
@@ -213,6 +298,18 @@ public class DataPopulatorServiceImpl {
         return ReviewerEntity.builder().name(name).email(email).password("$2a$10$r8mAqL.VD7cLEh/i9Hl96.E2SYrNUuFauPxG3q4hKywigL8Qx94Vy").conferences(conferences).academicTitle(academicTitle).surname(surname).role(roleReviewer).build();
     }
 
+    public AuthorPaymentEntity buildAuthorPayment(PaymentStatus status, LocalDateTime dueDate, LocalDateTime paymentDate,
+                                                  LocalDateTime returnDate, CurrencyValueEntity currencyValue, AuthorEntity author, ConferenceEntity conference) {
+        return AuthorPaymentEntity.builder().author(author).status(status).dueDate(dueDate).paymentDate(paymentDate).returnDate(returnDate)
+                .currencyValue(currencyValue).conference(conference).build();
+    }
+
+    public GuestPaymentEntity buildGuestPayment(PaymentStatus status, LocalDateTime dueDate, LocalDateTime paymentDate,
+                                                LocalDateTime returnDate, CurrencyValueEntity currencyValue, GuestEntity guest, ConferenceEntity conference) {
+        return GuestPaymentEntity.builder().guest(guest).status(status).dueDate(dueDate).paymentDate(paymentDate).returnDate(returnDate)
+                .currencyValue(currencyValue).conference(conference).build();
+    }
+
     private void saveRoles() {
         roleOrganiser = roleDao.save(RoleEntity.builder().name(UserRoleName.ROLE_ORGANISER).build());
         roleGuest = roleDao.save(RoleEntity.builder().name(UserRoleName.ROLE_GUEST).build());
@@ -220,7 +317,7 @@ public class DataPopulatorServiceImpl {
         roleReviewer = roleDao.save(RoleEntity.builder().name(UserRoleName.ROLE_REVIEWER).build());
     }
 
-    private void saveCurrency() {
+    private void saveCurrencies() {
         pricePlnStudent = currencyValueDao.save(CurrencyValueEntity.builder().amount(new BigDecimal(15)).currency(Currency.PLN).type(ValueType.STUDENT).build());
         pricePlnStandard = currencyValueDao.save(CurrencyValueEntity.builder().amount(new BigDecimal(30)).currency(Currency.PLN).type(ValueType.STANDARD).build());
         pricePLNVip = currencyValueDao.save(CurrencyValueEntity.builder().amount(new BigDecimal(99)).currency(Currency.PLN).type(ValueType.VIP).build());
