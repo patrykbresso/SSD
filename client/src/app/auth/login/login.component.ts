@@ -5,6 +5,7 @@ import { LoginTO } from './../model/login-to';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginAs } from '../model/login-as';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly authService: AuthService,
-    private readonly authStorageService: AuthStorageService) {
+    private readonly authStorageService: AuthStorageService,
+    private router: Router) {
     this.logAs = Object.keys(this.loginAsEnum).filter(f => !isNaN(Number(f)));
   }
 
@@ -42,6 +44,7 @@ export class LoginComponent implements OnInit {
           (data: JwtResponseTO) => {
             console.log(data);
             this.authStorageService.saveAuthData(data);
+            this.navigateToConferenceOverview();
           });
     }
   }
@@ -52,5 +55,9 @@ export class LoginComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(40)]],
       loginAs: [LoginAs.AUTHOR, [Validators.required]]
     });
+  }
+
+  private navigateToConferenceOverview() {
+    this.router.navigate(['/conference-overview'])
   }
 }
