@@ -1,17 +1,22 @@
 package com.ssdproject.example.SSD.conference.model.entity;
 
-import com.ssdproject.example.SSD.auth.model.entity.users.AuthorEntity;
 import com.ssdproject.example.SSD.auth.model.entity.users.GuestEntity;
 import com.ssdproject.example.SSD.auth.model.entity.users.OrganiserEntity;
 import com.ssdproject.example.SSD.schedule.model.entity.ScheduleEntity;
 import com.ssdproject.example.SSD.shared.model.entity.AbstractEntity;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Builder
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "conferences")
 public class ConferenceEntity extends AbstractEntity {
@@ -26,9 +31,9 @@ public class ConferenceEntity extends AbstractEntity {
     private LocalDateTime registrationDate;
 
     @Column
-    private boolean cancelled = false;
+    private boolean cancelled;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "information_id")
     private ConferenceInformationEntity conferenceInformation;
 
@@ -36,12 +41,9 @@ public class ConferenceEntity extends AbstractEntity {
     private List<OrganiserEntity> organisers;
 
     @ManyToMany(mappedBy = "conferences")
-    private List<AuthorEntity> authors;
-
-    @ManyToMany(mappedBy = "conferences")
     private List<GuestEntity> guests;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private ScheduleEntity schedule;
 
     @OneToOne

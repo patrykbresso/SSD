@@ -2,13 +2,19 @@ package com.ssdproject.example.SSD.auth.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ssdproject.example.SSD.auth.model.enums.UserRoleName;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NaturalId;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "roles")
 public class RoleEntity implements GrantedAuthority {

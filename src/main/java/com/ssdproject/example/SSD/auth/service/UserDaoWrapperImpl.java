@@ -12,6 +12,8 @@ import com.ssdproject.example.SSD.auth.model.entity.users.ReviewerEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserDaoWrapperImpl {
 
@@ -38,10 +40,12 @@ public class UserDaoWrapperImpl {
             return organiserEntity;
         }
         ReviewerEntity reviewerEntity = reviewerDao.findByEmail(email);
-        if (reviewerEntity != null) {
-            return reviewerEntity;
-        }
-        return null;
+        return reviewerEntity;
+    }
+
+    public Optional<GuestEntity> findById(Long id){
+        Optional<GuestEntity> authorEntity = guestDao.findById(id);
+            return authorEntity;
     }
 
     public UserEntity saveOrUpdate(UserEntity user) {

@@ -1,5 +1,7 @@
 package com.ssdproject.example.SSD.conference.endpoint;
 
+import com.ssdproject.example.SSD.auth.model.entity.users.GuestEntity;
+import com.ssdproject.example.SSD.auth.service.UserDaoWrapperImpl;
 import com.ssdproject.example.SSD.conference.model.to.ConferenceTO;
 import com.ssdproject.example.SSD.conference.model.to.SimpleConferenceTO;
 import com.ssdproject.example.SSD.conference.service.ConferenceServiceImpl;
@@ -9,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -17,6 +20,9 @@ public class ConferenceRest {
 
     @Autowired
     private ConferenceServiceImpl conferenceService;
+
+    @Autowired
+    private UserDaoWrapperImpl userDaoWrapper;
 
     @GetMapping("/all")
     public ResponseEntity<?> getAll() {
@@ -29,4 +35,11 @@ public class ConferenceRest {
         ConferenceTO conference = conferenceService.getOne(id);
         return new ResponseEntity<>(conference, HttpStatus.OK);
     }
+
+    @GetMapping("/{conferenceId}/addUser")
+    public ResponseEntity<?> addUserToConference (@PathVariable Long conferenceId){
+        conferenceService.addGuest(conferenceId);
+        return null;
+    }
+
 }
