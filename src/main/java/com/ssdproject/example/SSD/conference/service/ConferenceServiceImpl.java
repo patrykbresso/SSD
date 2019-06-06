@@ -1,5 +1,7 @@
 package com.ssdproject.example.SSD.conference.service;
 
+import com.ssdproject.example.SSD.auth.model.entity.users.GuestEntity;
+import com.ssdproject.example.SSD.auth.service.UserDaoWrapperImpl;
 import com.ssdproject.example.SSD.conference.dao.ConferenceDao;
 import com.ssdproject.example.SSD.conference.model.entity.ConferenceEntity;
 import com.ssdproject.example.SSD.conference.model.to.ConferenceTO;
@@ -8,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -17,6 +20,9 @@ public class ConferenceServiceImpl {
 
     @Autowired
     private ConferenceDao conferenceDao;
+
+    @Autowired
+    private UserDaoWrapperImpl userDaoWrapper;
 
     private ModelMapper modelMapper = new ModelMapper();
 
@@ -35,6 +41,18 @@ public class ConferenceServiceImpl {
             ConferenceTO conference = mapToTO(entity);
             return modelMapper.map(conference, SimpleConferenceTO.class);
         }).collect(Collectors.toList());
+    }
+
+    public void addGuest(Long conferenceId){
+        Optional<GuestEntity> guestEntity = userDaoWrapper.findById((long) 1); // TODO get user from token
+        ConferenceEntity conferenceEntity = conferenceDao.getOne(conferenceId); // TODO to scierwo
+        List<GuestEntity> guestEntities = new ArrayList<>();
+        if(conferenceEntity.getGuests() != null) {
+            guestEntities = conferenceEntity.getGuests();
+        }
+        guestEntities.add(guestEntity.get());
+        conferenceEntity.setGuests(guestEntities);
+        conferenceDao.save(conferenceEntity);
     }
 
     private ConferenceTO mapToTO(ConferenceEntity entity) {

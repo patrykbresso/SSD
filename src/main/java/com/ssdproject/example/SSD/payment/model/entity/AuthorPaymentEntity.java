@@ -18,4 +18,12 @@ public class AuthorPaymentEntity extends PaymentEntity {
 
     @ManyToOne
     private ConferenceEntity conference;
+
+    public AuthorPaymentEntity(AuthorEntity author, ConferenceEntity conference) {
+        this.author = author;
+        this.conference = conference;
+    }
+
+    public AuthorPaymentEntity() {
+    }
 }

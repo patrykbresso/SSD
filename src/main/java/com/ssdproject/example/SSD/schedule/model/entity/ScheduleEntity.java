@@ -20,4 +20,13 @@ public class ScheduleEntity extends AbstractEntity {
 
     @OneToMany(fetch = FetchType.EAGER)
     private List<ScheduleItemEntity> presentationsAndPosters;
+
+
+    public ScheduleEntity(ScheduleStatus status, List<ScheduleItemEntity> presentationsAndPosters) {
+        this.status = status;
+        this.presentationsAndPosters = presentationsAndPosters;
+    }
+
+    public ScheduleEntity() {
+    }
 }

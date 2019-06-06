@@ -25,4 +25,8 @@ public class ConferenceTO {
     private List<OrganiserTO> organisers;
     @JsonIgnore
     private List<GuestTO> guests;
+
+    public List<GuestTO> getGuests(){
+        return guests;
+    }
 }

@@ -25,4 +25,15 @@ public class CurrencyValueEntity extends AbstractEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ValueType type;
+
+
+    public CurrencyValueEntity(BigDecimal amount, Currency currency, ValueType type) {
+        this.amount = amount;
+        this.currency = currency;
+        this.type = type;
+    }
+
+
+    public CurrencyValueEntity() {
+    }
 }

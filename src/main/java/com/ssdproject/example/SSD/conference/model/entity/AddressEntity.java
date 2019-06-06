@@ -28,6 +28,18 @@ public class AddressEntity extends AbstractEntity {
     @Column
     private String description;
 
+    public AddressEntity(String city, String postalCode, String street, String streetNumber, String description, Country country) {
+        this.city = city;
+        this.postalCode = postalCode;
+        this.street = street;
+        this.streetNumber = streetNumber;
+        this.description = description;
+        this.country = country;
+    }
+
+    public AddressEntity() {
+    }
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Country country;

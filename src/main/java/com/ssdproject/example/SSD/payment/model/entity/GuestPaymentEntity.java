@@ -18,4 +18,13 @@ public class GuestPaymentEntity extends PaymentEntity {
 
     @ManyToOne
     private ConferenceEntity conference;
+
+
+    public GuestPaymentEntity(GuestEntity guest, ConferenceEntity conference) {
+        this.guest = guest;
+        this.conference = conference;
+    }
+
+    public GuestPaymentEntity() {
+    }
 }

@@ -25,4 +25,15 @@ public class ConferenceInformationEntity extends AbstractEntity {
 
     @Column(nullable = false)
     private int maxNumberOfSeats;
+
+
+    public ConferenceInformationEntity(String topic, String description, int maxNumberOfPresentations, int maxNumberOfSeats) {
+        this.topic = topic;
+        this.description = description;
+        this.maxNumberOfPresentations = maxNumberOfPresentations;
+        this.maxNumberOfSeats = maxNumberOfSeats;
+    }
+
+    public ConferenceInformationEntity() {
+    }
 }

@@ -28,4 +28,16 @@ public abstract class PaymentEntity extends AbstractEntity {
 
     @ManyToOne
     private CurrencyValueEntity currencyValue;
+
+
+    public PaymentEntity(PaymentStatus status, LocalDateTime dueDate, LocalDateTime paymentDate, LocalDateTime returnDate, CurrencyValueEntity currencyValue) {
+        this.status = status;
+        this.dueDate = dueDate;
+        this.paymentDate = paymentDate;
+        this.returnDate = returnDate;
+        this.currencyValue = currencyValue;
+    }
+
+    public PaymentEntity() {
+    }
 }
