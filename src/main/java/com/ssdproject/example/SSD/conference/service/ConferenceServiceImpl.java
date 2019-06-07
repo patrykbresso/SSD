@@ -1,7 +1,7 @@
 package com.ssdproject.example.SSD.conference.service;
 
 import com.ssdproject.example.SSD.auth.model.entity.users.GuestEntity;
-import com.ssdproject.example.SSD.auth.service.UserDaoWrapperImpl;
+import com.ssdproject.example.SSD.auth.service.UserDaoImpl;
 import com.ssdproject.example.SSD.conference.dao.ConferenceDao;
 import com.ssdproject.example.SSD.conference.model.entity.ConferenceEntity;
 import com.ssdproject.example.SSD.conference.model.to.ConferenceTO;
@@ -22,7 +22,7 @@ public class ConferenceServiceImpl {
     private ConferenceDao conferenceDao;
 
     @Autowired
-    private UserDaoWrapperImpl userDaoWrapper;
+    private UserDaoImpl userDaoWrapper;
 
     private ModelMapper modelMapper = new ModelMapper();
 
@@ -43,16 +43,20 @@ public class ConferenceServiceImpl {
         }).collect(Collectors.toList());
     }
 
-    public void addGuest(Long conferenceId){
+    public ConferenceEntity addGuest(Long conferenceId) {
         Optional<GuestEntity> guestEntity = userDaoWrapper.findById((long) 1); // TODO get user from token
-        ConferenceEntity conferenceEntity = conferenceDao.getOne(conferenceId); // TODO to scierwo
-        List<GuestEntity> guestEntities = new ArrayList<>();
-        if(conferenceEntity.getGuests() != null) {
-            guestEntities = conferenceEntity.getGuests();
+        Optional<ConferenceEntity> conference = conferenceDao.findById(conferenceId);
+        if (conference.isPresent() && guestEntity.isPresent()) {
+            List<GuestEntity> guestEntities = new ArrayList<>();
+            if (conference.get().getGuests() != null) {
+                guestEntities.addAll(conference.get().getGuests());
+            }
+            guestEntities.add(guestEntity.get());
+            conference.get().setGuests(guestEntities);
+            conferenceDao.save(conference.get());
+            return conference.get();
         }
-        guestEntities.add(guestEntity.get());
-        conferenceEntity.setGuests(guestEntities);
-        conferenceDao.save(conferenceEntity);
+        return null;
     }
 
     private ConferenceTO mapToTO(ConferenceEntity entity) {
@@ -67,5 +71,9 @@ public class ConferenceServiceImpl {
         conference.getConferenceInformation().setAvailableSeats(numberSeatsLeft);
 
         return conference;
+    }
+
+    public List<GuestEntity> getAllGuests(Long conferenceId) {
+        return conferenceDao.getOne(conferenceId).getGuests();
     }
 }

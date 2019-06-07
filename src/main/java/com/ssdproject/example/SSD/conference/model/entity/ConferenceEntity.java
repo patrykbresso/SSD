@@ -40,7 +40,9 @@ public class ConferenceEntity extends AbstractEntity {
     @ManyToMany(mappedBy = "conferences")
     private List<OrganiserEntity> organisers;
 
-    @ManyToMany(mappedBy = "conferences")
+    @ManyToMany
+    @JoinColumn(
+            name = "guests", insertable = true, updatable = true, nullable = false, referencedColumnName = "id")
     private List<GuestEntity> guests;
 
     @OneToOne(cascade = CascadeType.ALL)

@@ -31,7 +31,7 @@ public class AuthServiceImpl {
     @Autowired
     private RoleDao roleDao;
     @Autowired
-    private UserDaoWrapperImpl userDaoWrapper;
+    private UserDaoImpl userDaoWrapper;
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
