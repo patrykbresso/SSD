@@ -4,6 +4,8 @@ package com.ssdproject.example.SSD.payment.controllers;
 import com.ssdproject.example.SSD.payment.model.entity.CurrencyValueEntity;
 import com.ssdproject.example.SSD.payment.service.PayPalClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.PermitAll;
@@ -25,7 +27,8 @@ public class PaymentsController {
     }
 
     @PostMapping(value = "/complete/payment")
-    public Map<String, Object> completePayment(HttpServletRequest request){
-        return payPalClient.completePayment(request);
+    public ResponseEntity<?> completePayment(@RequestParam("conferenceId") Long conferenceId){
+        return new ResponseEntity<>(payPalClient.completePayment(conferenceId), HttpStatus.OK);
     }
+
 }

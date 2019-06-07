@@ -3,27 +3,42 @@ package com.ssdproject.example.SSD.payment.service;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.PayPalRESTException;
+import com.ssdproject.example.SSD.auth.dao.GuestDao;
+import com.ssdproject.example.SSD.conference.dao.ConferenceDao;
+import com.ssdproject.example.SSD.payment.dao.CurrencyValueDao;
+import com.ssdproject.example.SSD.payment.dao.GuestPaymentDao;
 import com.ssdproject.example.SSD.payment.model.entity.CurrencyValueEntity;
+import com.ssdproject.example.SSD.payment.model.entity.GuestPaymentEntity;
+import com.ssdproject.example.SSD.payment.model.enums.PaymentStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 public class PayPalClient {
 
     @Value("${paypal.url.cancel}")
-    private String calncelURL;
+    private String cancelURL;
 
     @Value("${paypal.url.return}")
     private String returnURL;
 
     String clientId = "AbMJhzqnrSC-o3CVKbsBIN5fHupQ1Eq-w5ijk_axB0WkTvcNsP-R2JkoY_1S4Ei4ZF_j4dJx67JJsPuE";
     String clientSecret = "EI-sJFJjfBHUvxczbjqDuQVvsDUPyKzRBjj8Zo7tVZwpFvBp5vHtFQzkTAcUYD0Ww1FPpJIonN1-Sh-X";
+
+    @Autowired
+    private GuestPaymentDao guestPaymentDao;
+    @Autowired
+    private ConferenceDao conferenceDao;
+
+    @Autowired
+    private CurrencyValueDao currencyValueDao;
+
+    @Autowired
+    private GuestDao guestDao;
 
     public Map<String, Object> createPayment(Long conferenceId, CurrencyValueEntity currencyValueEntity) {
         Map<String, Object> response = new HashMap<String, Object>();
@@ -45,8 +60,8 @@ public class PayPalClient {
         payment.setTransactions(transactions);
 
         RedirectUrls redirectUrls = new RedirectUrls();
-        redirectUrls.setCancelUrl(calncelURL);
-        redirectUrls.setReturnUrl(returnURL);
+        redirectUrls.setReturnUrl(returnURL.replace("{:conferenceId}", conferenceId.toString()));
+        redirectUrls.setCancelUrl(cancelURL);
         payment.setRedirectUrls(redirectUrls);
         Payment createdPayment;
         try {
@@ -70,24 +85,17 @@ public class PayPalClient {
         return response;
     }
 
-    public Map<String, Object> completePayment(HttpServletRequest req){
-        Map<String, Object> response = new HashMap();
-        Payment payment = new Payment();
-        payment.setId(req.getParameter("paymentId"));
-
-        PaymentExecution paymentExecution = new PaymentExecution();
-        paymentExecution.setPayerId(req.getParameter("PayerID"));
-        try {
-            APIContext context = new APIContext(clientId, clientSecret, "sandbox");
-            Payment createdPayment = payment.execute(context, paymentExecution);
-            if(createdPayment!=null){
-                response.put("status", "success");
-                response.put("payment", createdPayment);
-            }
-        } catch (PayPalRESTException e) {
-            System.err.println(e.getDetails());
-        }
-        return response;
+    public GuestPaymentEntity completePayment(Long conferenceId){
+        CurrencyValueEntity currencyValueEntity = currencyValueDao.getOne((long)1);
+        GuestPaymentEntity guestPaymentEntity = GuestPaymentEntity.builder()
+                .conference(conferenceDao.getOne(conferenceId))
+                .currencyValue(currencyValueEntity)
+                .guest(guestDao.getOne((long)1))
+                .paymentDate(LocalDateTime.now())
+                .dueDate(LocalDateTime.now())
+                .status(PaymentStatus.ACCEPTED)
+                .build();
+        return guestPaymentDao.save(guestPaymentEntity);
     }
 
 
