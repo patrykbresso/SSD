@@ -15,6 +15,14 @@
           </tr>
           </thead>
           <tbody>
+          <tr *ngFor="let el of conference.schedule.presentationsAndPosters">
+            <td>{{el.topic}}</td>
+            <td>{{el.presentation.authors}}</td>
+            <td>{{el.startDate}}</td>
+            <td>{{el.endDate}}</td>
+            <td>2h</td>
+            <td>{{el.localizationDetail}}</td>
+          </tr>
           </tbody>
         </table>
       </div>

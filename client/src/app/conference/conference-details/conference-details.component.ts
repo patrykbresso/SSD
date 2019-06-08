@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {Conference} from "../conference";
 import {ActivatedRoute} from "@angular/router";
+import {SimpleConference} from "../simple-conference";
+import {Conference} from "../conference";
 
+//TODO add all authors
 @Component({
   selector: 'app-conference-details',
   templateUrl: './conference-details.component.html',

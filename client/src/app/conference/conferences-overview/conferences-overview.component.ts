@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {Conference} from "../conference";
+import {SimpleConference} from "../simple-conference";
 
 @Component({
   selector: 'app-conferences-overview',
@@ -10,7 +10,7 @@ import {Conference} from "../conference";
 export class ConferencesOverviewComponent implements OnInit {
 
   data: any;
-  overview: Conference[] = [];
+  overview: SimpleConference[] = [];
   constructor(
     private route: ActivatedRoute,
     private router: Router
