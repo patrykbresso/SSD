@@ -1,0 +1,44 @@
+#content-right {
+  border-left:2px solid rgb(0,0,0);
+  border-top:10px solid rgb(255,255,255);
+}
+
+.actions-text {
+  margin-top: 20%;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+button {
+  border-radius: 0;
+  width: 100%;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.row {
+  margin-top: 15px;
+}
+
+#main {
+  height: 85vh;
+  width: 100%;
+}
+
+.table {
+  margin-top: 5%;
+  font-size: 14px;
+}
+
+#topic-row {
+  font-size: 19px;
+  font-weight: bold;
+}
+
+#date-row {
+  font-size: 17px;
+}
+
+#description-row {
+  font-size: 15px;
+}

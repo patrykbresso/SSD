@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { RegisterTO } from '../model/register-to';
 import { RegisterAs } from '../model/register-as';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register',
@@ -17,7 +18,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private readonly formBuilder: FormBuilder,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    private router: Router
   ) {
     this.regAs = Object.keys(this.retisterAsEnum).filter(f => !isNaN(Number(f)));
   }
@@ -36,7 +38,7 @@ export class RegisterComponent implements OnInit {
         password: this.registerForm.controls['password'].value,
         registrationType: this.registerForm.controls['registerAs'].value
       }
-
+//TODO: add error message in case of error
       this.authService.register(registerData).subscribe(
         (res) => {
           console.log(res);
@@ -46,7 +48,7 @@ export class RegisterComponent implements OnInit {
   }
 
   private navigateToLoginPage() {
-
+      this.router.navigate(['/login'])
   }
 
   private initForm() {

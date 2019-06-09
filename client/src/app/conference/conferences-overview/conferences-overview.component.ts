@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
+import {SimpleConference} from "../simple-conference";
 
 @Component({
   selector: 'app-conferences-overview',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConferencesOverviewComponent implements OnInit {
 
-  constructor() { }
+  data: any;
+  overview: SimpleConference[] = [];
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
 
   ngOnInit() {
+    this.data = this.route.snapshot.data;
+    this.overview = this.data.overview;
   }
 
+  headElements = ['Conference Name', 'Start Date', 'End Date', 'Location', 'More Information'];
+
+  onMoreInformationClick(id: number) {
+    this.router.navigate(['/conference/' + id])
+  }
 }
