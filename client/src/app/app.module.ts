@@ -20,6 +20,8 @@ import { UploadPosterComponent } from "./register-exh-item/upload-poster/upload-
 import { ConferencesOverviewResolver } from "./conference/conferences-overview/conferences-overview-resolver";
 import { ConferenceService } from "./conference/conference-service";
 import { ConferenceDetailsResolver } from "./conference/conference-details/conference-details-resolver";
+import { IsAuthenticatedDirective } from './directives/is-authenticated.directive';
+import { HasRoleDirective } from './directives/has-role.directive';
 
 
 @NgModule({
@@ -32,7 +34,9 @@ import { ConferenceDetailsResolver } from "./conference/conference-details/confe
     PaymentComponent,
     ReviewComponent,
     UploadPosterComponent,
-    UploadPresentationComponent
+    UploadPresentationComponent,
+    IsAuthenticatedDirective,
+    HasRoleDirective
   ],
   imports: [
     BrowserModule,
