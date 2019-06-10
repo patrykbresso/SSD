@@ -17,6 +17,7 @@ import { PaymentComponent } from './payment/payment.component';
 import { ReviewComponent } from './review/review.component';
 import { UploadPresentationComponent } from './register-exh-item/upload-presentation/upload-presentation.component';
 import {UploadPosterComponent} from "./register-exh-item/upload-poster/upload-poster.component";
+import { PaymentSuccessfulComponent } from './payment/paymentSuccessful/payment-successful/payment-successful.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {UploadPosterComponent} from "./register-exh-item/upload-poster/upload-po
     PaymentComponent,
     ReviewComponent,
     UploadPosterComponent,
-    UploadPresentationComponent
+    UploadPresentationComponent,
+    PaymentSuccessfulComponent
   ],
   imports: [
     BrowserModule,

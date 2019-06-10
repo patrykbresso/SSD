@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Location} from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-payment',
@@ -8,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class PaymentComponent implements OnInit {
   amount: number;
 
-  constructor() {
+  constructor(private _location: Location, private router: Router) {
     this.amount = 10.00;
   }
 
@@ -16,11 +18,11 @@ export class PaymentComponent implements OnInit {
   }
 
   cancel() {
-
+    this._location.back();
   }
 
   payNow() {
-
+    this.router.navigateByUrl('/api/payments/complete/payment?conferenceId=1');
   }
 
 }
