@@ -37,7 +37,7 @@ class OrganiserDaoTest {
         String email = "andrzej@gmail.com";
         String name = "Andrzej";
         String surname = "Strzelba";
-        dataPopulatorService.saveOrganiser("Andrzej", email, "Strzelba", new ArrayList<>());
+        dataPopulatorService.saveOrganiser(name, email, surname, new ArrayList<>());
         // when
         OrganiserEntity savedOrganiser = organiserDao.findByEmail(email);
         // then

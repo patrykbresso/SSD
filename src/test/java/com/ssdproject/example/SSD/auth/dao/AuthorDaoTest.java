@@ -38,7 +38,7 @@ class AuthorDaoTest {
         String email = "andrzej@gmail.com";
         String name = "Andrzej";
         String surname = "Strzelba";
-        dataPopulatorService.saveAuthor("Andrzej", email, "Strzelba", AcademicTitle.PROFESSOR, new ArrayList<>());
+        dataPopulatorService.saveAuthor(name, email, surname, AcademicTitle.PROFESSOR, new ArrayList<>());
         // when
         AuthorEntity savedAuthor = authorDao.findByEmail(email);
         // then

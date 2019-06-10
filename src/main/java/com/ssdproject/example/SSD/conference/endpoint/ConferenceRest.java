@@ -1,17 +1,19 @@
 package com.ssdproject.example.SSD.conference.endpoint;
 
-import com.ssdproject.example.SSD.auth.model.entity.users.GuestEntity;
 import com.ssdproject.example.SSD.auth.service.UserDaoWrapperImpl;
 import com.ssdproject.example.SSD.conference.model.to.ConferenceTO;
 import com.ssdproject.example.SSD.conference.model.to.SimpleConferenceTO;
+import com.ssdproject.example.SSD.conference.model.to.UserToConferenceAddTo;
 import com.ssdproject.example.SSD.conference.service.ConferenceServiceImpl;
+import com.ssdproject.example.SSD.shared.model.to.ResponseTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -36,10 +38,13 @@ public class ConferenceRest {
         return new ResponseEntity<>(conference, HttpStatus.OK);
     }
 
-    @GetMapping("/{conferenceId}/addUser")
-    public ResponseEntity<?> addUserToConference (@PathVariable Long conferenceId){
-        conferenceService.addGuest(conferenceId);
-        return null;
-    }
+    @PreAuthorize("hasRole('ROLE_GUEST') or hasRole('ROLE_AUTHOR')")
+    @PostMapping("/add-user")
+    public ResponseEntity<?> addUserToConference(@RequestBody UserToConferenceAddTo form, Principal principal) {
+        if (form.getConferenceId() == null || form.getUserId() == null) {
+            return new ResponseEntity<>(new ResponseTO("Provided form is wrong, please send a correct request."), HttpStatus.BAD_REQUEST);
+        }
 
+        return conferenceService.addUserToConference(form.getConferenceId(), form.getUserId());
+    }
 }

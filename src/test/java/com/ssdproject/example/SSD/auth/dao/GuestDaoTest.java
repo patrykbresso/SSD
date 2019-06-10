@@ -32,12 +32,12 @@ class GuestDaoTest {
     }
 
     @Test
-    void shouldFindOrganiserByEmail() {
+    void shouldFindGuestByEmail() {
         // given
         String email = "andrzej@gmail.com";
         String name = "Andrzej";
         String surname = "Strzelba";
-        dataPopulatorService.saveGuest("Andrzej", email, "Strzelba", new ArrayList<>());
+        dataPopulatorService.saveGuest(name, email, surname, new ArrayList<>());
         // when
         GuestEntity savedGuest = organiserDao.findByEmail(email);
         // then
@@ -47,7 +47,7 @@ class GuestDaoTest {
     }
 
     @Test
-    void shouldReturnNullWhenLookingForNotSavedOrganiser() {
+    void shouldReturnNullWhenLookingForNotSavedGuest() {
         // given
         String email = "andrzej@gmail.com";
         // when

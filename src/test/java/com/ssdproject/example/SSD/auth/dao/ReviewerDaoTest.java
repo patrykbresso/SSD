@@ -33,12 +33,12 @@ class ReviewerDaoTest {
     }
 
     @Test
-    void shouldFindAuthorByEmail() {
+    void shouldFindReviewerByEmail() {
         // given
         String email = "andrzej@gmail.com";
         String name = "Andrzej";
         String surname = "Strzelba";
-        dataPopulatorService.saveReviewer("Andrzej", email, "Strzelba", AcademicTitle.PROFESSOR, new ArrayList<>());
+        dataPopulatorService.saveReviewer(name, email, surname, AcademicTitle.PROFESSOR, new ArrayList<>());
         // when
         ReviewerEntity savedReviewer = reviewerDao.findByEmail(email);
         // then
@@ -48,7 +48,7 @@ class ReviewerDaoTest {
     }
 
     @Test
-    void shouldReturnNullWhenLookingForNotSavedAuthor() {
+    void shouldReturnNullWhenLookingForNotSavedReviewer() {
         // given
         String email = "andrzej@gmail.com";
         // when
