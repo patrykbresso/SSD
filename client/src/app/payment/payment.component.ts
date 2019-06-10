@@ -6,10 +6,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./payment.component.css']
 })
 export class PaymentComponent implements OnInit {
+  amount: number;
 
-  constructor() { }
+  constructor() {
+    this.amount = 10.00;
+  }
 
   ngOnInit() {
+  }
+
+  cancel() {
+
+  }
+
+  payNow() {
+
   }
 
 }

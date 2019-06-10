@@ -1,3 +1,17 @@
-<p>
-  payment works!
-</p>
+<div class="main">
+  <div class="heading">
+    <img src="assets/paypal-logo.png" id="paypal-logo">
+    <span class="price font-weight-bold">{{ amount }}$</span>
+  </div>
+  <div class="inner">
+    <h4>Pay with</h4>
+    <div>
+      <img src="assets/visa-4.svg" id="visa-logo">
+      <span class="price font-weight-bold">{{ amount }}$</span>
+    </div>
+  </div>
+  <div class="footer">
+    <button class="blue button" (click)="payNow()">Pay now</button>
+    <button class="white button" (click)="cancel()">Cancel</button>
+  </div>
+</div>
