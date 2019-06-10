@@ -78,9 +78,10 @@ public class ConferenceServiceImpl {
 
     private ConferenceTO mapToTO(ConferenceEntity entity) {
         ConferenceTO conference = modelMapper.map(entity, ConferenceTO.class);
+
         int numberSeatsLeft = entity.getGuests() != null ?
-                entity.getConferenceInformation().getMaxNumberOfSeats() - entity.getGuests().size() :
-                entity.getConferenceInformation().getMaxNumberOfSeats();
+                entity.getConferenceInformation().getMaxNumberOfSeats() - entity.getConferenceInformation().getMaxNumberOfPresentations() - entity.getGuests().size() :
+                entity.getConferenceInformation().getMaxNumberOfSeats() - entity.getConferenceInformation().getMaxNumberOfPresentations();
 
         int addedPresentationsNumber = (int) entity.getSchedule().getPresentationsAndPosters().stream().filter(p -> p.getPresentation() != null).count();
         int numberPresentationsLeft = entity.getConferenceInformation().getMaxNumberOfPresentations() - addedPresentationsNumber;
