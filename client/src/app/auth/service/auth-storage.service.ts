@@ -13,17 +13,23 @@ export class AuthStorageService {
   public currentRole = this.currentRoleSubject.asObservable().pipe(distinctUntilChanged());
 
   constructor() {
-    this.isAuthenticatedSubject.next(false);
-    this.currentRoleSubject.next(null);
+    let role = this.getUserAuthority();
+    if (role && role !== "") {
+      this.isAuthenticatedSubject.next(true);
+      this.currentRoleSubject.next(role);
+    } else {
+      this.isAuthenticatedSubject.next(false);
+      this.currentRoleSubject.next(null);
+    }
   }
 
   public saveAuthData(data: JwtResponseTO) {
-    this.isAuthenticatedSubject.next(true);
-    this.currentRoleSubject.next(data.authorities[0].name);
-
     localStorage.setItem('ssd_token', data.token);
     localStorage.setItem('ssd_authority', data.authorities[0].name);
     localStorage.setItem('ssd_user_email', data.username);
+
+    this.isAuthenticatedSubject.next(true);
+    this.currentRoleSubject.next(data.authorities[0].name);
   }
 
   public signOut() {

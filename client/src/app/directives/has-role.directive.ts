@@ -1,11 +1,11 @@
-import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Directive, Input, TemplateRef, ViewContainerRef, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthStorageService } from '../auth/service/auth-storage.service';
 
 @Directive({
   selector: '[appHasRole]'
 })
-export class HasRoleDirective {
+export class HasRoleDirective implements OnInit, OnDestroy {
 
   private sub: Subscription;
 
