@@ -2,7 +2,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import {MatToolbarModule} from '@angular/material/toolbar';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppComponent } from './app.component';
 import { TabbarComponent } from './tabbar/tabbar.component';
@@ -16,10 +16,10 @@ import { ConferencesOverviewComponent } from './conference/conferences-overview/
 import { PaymentComponent } from './payment/payment.component';
 import { ReviewComponent } from './review/review.component';
 import { UploadPresentationComponent } from './register-exh-item/upload-presentation/upload-presentation.component';
-import {UploadPosterComponent} from "./register-exh-item/upload-poster/upload-poster.component";
-import {ConferencesOverviewResolver} from "./conference/conferences-overview/conferences-overview-resolver";
-import {ConferenceService} from "./conference/conference-service";
-import {ConferenceDetailsResolver} from "./conference/conference-details/conference-details-resolver";
+import { UploadPosterComponent } from "./register-exh-item/upload-poster/upload-poster.component";
+import { ConferencesOverviewResolver } from "./conference/conferences-overview/conferences-overview-resolver";
+import { ConferenceService } from "./conference/conference-service";
+import { ConferenceDetailsResolver } from "./conference/conference-details/conference-details-resolver";
 
 
 @NgModule({
@@ -37,9 +37,11 @@ import {ConferenceDetailsResolver} from "./conference/conference-details/confere
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MatToolbarModule,
     AppModuleRouting,
-    AuthModule
+    AuthModule,
+    ToastrModule.forRoot({
+      preventDuplicates: true
+    })
   ],
   providers: [
     httpInterceptorProviders,
