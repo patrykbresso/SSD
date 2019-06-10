@@ -41,10 +41,13 @@ public class ConferenceRest {
     @PreAuthorize("hasRole('ROLE_GUEST') or hasRole('ROLE_AUTHOR')")
     @PostMapping("/add-user")
     public ResponseEntity<?> addUserToConference(@RequestBody UserToConferenceAddTo form, Principal principal) {
-        if (form.getConferenceId() == null || form.getUserId() == null) {
+        if (form.getConferenceId() == null || form.getUserEmail() == null) {
             return new ResponseEntity<>(new ResponseTO("Provided form is wrong, please send a correct request."), HttpStatus.BAD_REQUEST);
         }
+        if (!principal.getName().equals(form.getUserEmail())) {
+            return new ResponseEntity<>(new ResponseTO("Provided email do not belong to current logged in user."), HttpStatus.BAD_REQUEST);
+        }
 
-        return conferenceService.addUserToConference(form.getConferenceId(), form.getUserId());
+        return conferenceService.addUserToConference(form.getConferenceId(), form.getUserEmail());
     }
 }

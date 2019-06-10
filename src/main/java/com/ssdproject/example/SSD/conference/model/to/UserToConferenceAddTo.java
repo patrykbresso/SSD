@@ -6,5 +6,5 @@ import lombok.Getter;
 public class UserToConferenceAddTo {
 
     private Long conferenceId;
-    private Long userId;
+    private String userEmail;
 }

@@ -49,8 +49,8 @@ public class ConferenceServiceImpl {
     }
 
     @Transactional
-    public ResponseEntity<?> addUserToConference(Long conferenceId, Long userId) {
-        UserEntity userEntity = userDaoWrapper.findById(userId);
+    public ResponseEntity<?> addUserToConference(Long conferenceId, String userEmail) {
+        UserEntity userEntity = userDaoWrapper.findByEmail(userEmail);
         Optional<ConferenceEntity> conferenceEntity = conferenceDao.findById(conferenceId);
 
         if (!conferenceEntity.isPresent() || userEntity == null) {
