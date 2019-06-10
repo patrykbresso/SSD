@@ -17,7 +17,7 @@ import { PaymentComponent } from './payment/payment.component';
 import { ReviewComponent } from './review/review.component';
 import { UploadPresentationComponent } from './register-exh-item/upload-presentation/upload-presentation.component';
 import {UploadPosterComponent} from "./register-exh-item/upload-poster/upload-poster.component";
-import { PaymentSuccessfulComponent } from './payment/paymentSuccessful/payment-successful/payment-successful.component';
+import { PaymentSuccessfulComponent } from './payment/payment-successful/payment-successful.component';
 
 
 @NgModule({
