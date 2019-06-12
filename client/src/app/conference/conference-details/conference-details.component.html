@@ -15,12 +15,12 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let el of conference.schedule.presentationsAndPosters">
+          <tr *ngFor="let el of scheduleItems">
             <td>{{el.topic}}</td>
-            <td>{{el.presentation.authors}}</td>
-            <td>{{el.startDate}}</td>
-            <td>{{el.endDate}}</td>
-            <td>2h</td>
+            <td>{{getAuthors(el)}}</td>
+            <td>{{el.startDate | date:'d.MM.yyyy'}}</td>
+            <td>{{el.startDate | date:'H:mm'}}</td>
+            <td>{{getDuration(el)}}</td>
             <td>{{el.localizationDetail}}</td>
           </tr>
           </tbody>
