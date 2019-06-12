@@ -1,15 +1,24 @@
+import { AuthStorageService } from './../auth/service/auth-storage.service';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tabbar',
   templateUrl: './tabbar.component.html',
   styleUrls: ['./tabbar.component.css']
 })
-export class TabbarComponent implements OnInit {
+export class TabbarComponent {
 
-  constructor() { }
+  constructor(
+    private readonly authStorageService: AuthStorageService,
+    private readonly router: Router
+  ) { }
 
-  ngOnInit() {
+  private onSetting() {
+    let email = this.authStorageService.getUserEmail();
+    if (email && email !== "") {
+      this.router.navigate(['/user-detail/' + email])
+    }
   }
 
 }

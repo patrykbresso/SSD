@@ -5,7 +5,8 @@ import { LoginTO } from './../model/login-to';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginAs } from '../model/login-as';
-import {Router} from "@angular/router";
+import { Router } from "@angular/router";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,8 @@ export class LoginComponent implements OnInit {
     private readonly formBuilder: FormBuilder,
     private readonly authService: AuthService,
     private readonly authStorageService: AuthStorageService,
-    private router: Router) {
+    private readonly router: Router,
+    private readonly toastr: ToastrService) {
     this.logAs = Object.keys(this.loginAsEnum).filter(f => !isNaN(Number(f)));
   }
 
@@ -42,9 +44,12 @@ export class LoginComponent implements OnInit {
       this.authService.login(loginData)
         .subscribe(
           (data: JwtResponseTO) => {
-            console.log(data);
+            this.toastr.success("You are successfully logged in.", "Login successful", { timeOut: 1500 });
             this.authStorageService.saveAuthData(data);
             this.navigateToConferenceOverview();
+          },
+          (error: any) => {
+            this.toastr.error(error.error.message, "Ups! Something went wrong");
           });
     }
   }

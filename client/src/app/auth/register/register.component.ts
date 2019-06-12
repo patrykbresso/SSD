@@ -3,7 +3,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { RegisterTO } from '../model/register-to';
 import { RegisterAs } from '../model/register-as';
-import {Router} from "@angular/router";
+import { Router } from "@angular/router";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -19,7 +20,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly authService: AuthService,
-    private router: Router
+    private readonly router: Router,
+    private readonly toastr: ToastrService
   ) {
     this.regAs = Object.keys(this.retisterAsEnum).filter(f => !isNaN(Number(f)));
   }
@@ -38,17 +40,19 @@ export class RegisterComponent implements OnInit {
         password: this.registerForm.controls['password'].value,
         registrationType: this.registerForm.controls['registerAs'].value
       }
-//TODO: add error message in case of error
       this.authService.register(registerData).subscribe(
         (res) => {
-          console.log(res);
+          this.toastr.success("You have successfully registered Your account.\nPlease loggin.", "Reginstration complete", { timeOut: 1500 });
           this.navigateToLoginPage();
+        },
+        (error: any) => {
+          this.toastr.error(error.error.message, "Ups! Something went wrong")
         });
     }
   }
 
   private navigateToLoginPage() {
-      this.router.navigate(['/login'])
+    this.router.navigate(['/login'])
   }
 
   private initForm() {

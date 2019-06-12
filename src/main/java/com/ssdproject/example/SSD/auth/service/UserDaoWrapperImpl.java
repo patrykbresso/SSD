@@ -39,13 +39,24 @@ public class UserDaoWrapperImpl {
         if (organiserEntity != null) {
             return organiserEntity;
         }
-        ReviewerEntity reviewerEntity = reviewerDao.findByEmail(email);
-        return reviewerEntity;
+        return reviewerDao.findByEmail(email);
     }
 
-    public Optional<GuestEntity> findById(Long id){
-        Optional<GuestEntity> authorEntity = guestDao.findById(id);
-            return authorEntity;
+    public UserEntity findById(Long id) {
+        Optional<AuthorEntity> authorEntity = authorDao.findById(id);
+        if (authorEntity.isPresent()) {
+            return authorEntity.get();
+        }
+        Optional<GuestEntity> guestEntity = guestDao.findById(id);
+        if (guestEntity.isPresent()) {
+            return guestEntity.get();
+        }
+        Optional<OrganiserEntity> organiserEntity = organiserDao.findById(id);
+        if (organiserEntity.isPresent()) {
+            return organiserEntity.get();
+        }
+        Optional<ReviewerEntity> reviewerEntity = reviewerDao.findById(id);
+        return reviewerEntity.get();
     }
 
     public UserEntity saveOrUpdate(UserEntity user) {

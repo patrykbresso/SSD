@@ -38,6 +38,10 @@ public class AuthServiceImpl {
     private JwtProvider jwtProvider;
 
     public ResponseEntity<?> createAccount(RegisterTO form) {
+        UserEntity checkUserEmail = userDaoWrapper.findByEmail(form.getEmail());
+        if (checkUserEmail != null) {
+            return new ResponseEntity<>(new ResponseTO("User with provided email is already registered."), HttpStatus.BAD_REQUEST);
+        }
 
         switch (form.getRegistrationType()) {
             case AUTHOR:
