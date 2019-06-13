@@ -3,7 +3,7 @@ package com.ssdproject.example.SSD.conference.service;
 import com.ssdproject.example.SSD.auth.model.entity.UserEntity;
 import com.ssdproject.example.SSD.auth.model.entity.users.AuthorEntity;
 import com.ssdproject.example.SSD.auth.model.entity.users.GuestEntity;
-import com.ssdproject.example.SSD.auth.service.UserDaoWrapperImpl;
+import com.ssdproject.example.SSD.auth.service.wrapper.UserDaoWrapperImpl;
 import com.ssdproject.example.SSD.conference.dao.ConferenceDao;
 import com.ssdproject.example.SSD.conference.model.entity.ConferenceEntity;
 import com.ssdproject.example.SSD.conference.model.to.ConferenceTO;

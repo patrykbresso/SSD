@@ -1,6 +1,6 @@
 package com.ssdproject.example.SSD.conference.endpoint;
 
-import com.ssdproject.example.SSD.auth.service.UserDaoWrapperImpl;
+import com.ssdproject.example.SSD.auth.service.wrapper.UserDaoWrapperImpl;
 import com.ssdproject.example.SSD.conference.model.to.ConferenceTO;
 import com.ssdproject.example.SSD.conference.model.to.SimpleConferenceTO;
 import com.ssdproject.example.SSD.conference.model.to.UserToConferenceAddTo;

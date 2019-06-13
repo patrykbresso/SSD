@@ -4,6 +4,7 @@ import com.ssdproject.example.SSD.auth.model.entity.UserEntity;
 import com.ssdproject.example.SSD.auth.model.entity.users.AuthorEntity;
 import com.ssdproject.example.SSD.auth.model.entity.users.ReviewerEntity;
 import com.ssdproject.example.SSD.auth.model.to.UserDetailsTO;
+import com.ssdproject.example.SSD.auth.service.wrapper.UserDaoWrapperImpl;
 import com.ssdproject.example.SSD.shared.model.to.ResponseTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

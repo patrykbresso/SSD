@@ -1,9 +1,10 @@
-package com.ssdproject.example.SSD.auth.service;
+package com.ssdproject.example.SSD.auth.service.wrapper;
 
 import com.ssdproject.example.SSD.auth.model.entity.UserEntity;
 import com.ssdproject.example.SSD.auth.model.entity.users.AuthorEntity;
 import com.ssdproject.example.SSD.auth.model.entity.users.ReviewerEntity;
 import com.ssdproject.example.SSD.auth.model.enums.AcademicTitle;
+import com.ssdproject.example.SSD.auth.service.wrapper.UserDaoWrapperImpl;
 import com.ssdproject.example.SSD.shared.service.DataPopulatorServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -9,6 +9,7 @@ import com.ssdproject.example.SSD.auth.model.enums.LoginType;
 import com.ssdproject.example.SSD.auth.model.enums.UserRoleName;
 import com.ssdproject.example.SSD.auth.model.to.LoginTO;
 import com.ssdproject.example.SSD.auth.model.to.RegisterTO;
+import com.ssdproject.example.SSD.auth.service.wrapper.UserDaoWrapperImpl;
 import com.ssdproject.example.SSD.config.security.jwt.JwtProvider;
 import com.ssdproject.example.SSD.shared.model.to.JwtResponseTO;
 import com.ssdproject.example.SSD.shared.model.to.ResponseTO;
