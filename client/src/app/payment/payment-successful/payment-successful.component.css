@@ -1,0 +1,43 @@
+#paypal-logo {
+  height: 50px;
+  float: left;
+}
+
+.main {
+  border: solid 1px darkgray;
+  border-radius: 5px;
+  margin: 10px 100px;
+}
+
+.heading, .footer, .inner {
+  width: 50%;
+  margin: 15px auto;
+}
+
+.heading {
+  border-bottom: 1px solid dimgray;
+  height: 55px !important;
+}
+
+
+h4 {
+  margin: 5px;
+}
+
+.inner > div {
+  margin: 5px;
+}
+
+.button {
+  margin: 5px;
+  width: 100%;
+  border-radius: 5px;
+  font-weight: bold;
+  border: 0px;
+  line-height: 35px;
+}
+
+.blue {
+  background-color: royalblue;
+  color: white;
+}

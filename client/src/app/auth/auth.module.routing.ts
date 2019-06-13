@@ -3,6 +3,7 @@ import { ModuleWithProviders } from '@angular/core';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import {PaymentComponent} from "../payment/payment.component";
+import {PaymentSuccessfulComponent} from "../payment/payment-successful/payment-successful.component";
 
 const routes: Routes = [
     {
@@ -16,7 +17,11 @@ const routes: Routes = [
     {
         path: 'payment',
         component: PaymentComponent,
-    }
+    },
+    {
+        path: 'complete/payment',
+        component: PaymentSuccessfulComponent,
+    },
 ];
 
 export const AuthModuleRouting: ModuleWithProviders = RouterModule.forChild(routes);

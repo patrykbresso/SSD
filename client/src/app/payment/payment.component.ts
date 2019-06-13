@@ -22,7 +22,7 @@ export class PaymentComponent implements OnInit {
   }
 
   payNow() {
-    this.router.navigateByUrl('/api/payments/complete/payment?conferenceId=1');
+    this.router.navigateByUrl('complete/payment');
   }
 
 }

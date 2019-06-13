@@ -14,7 +14,7 @@ const routes: Routes = [
   {
     path: 'conference/:id',
     component: ConferenceDetailsComponent,
-  }
+  },
 ];
 
 export const AppModuleRouting: ModuleWithProviders = RouterModule.forRoot(routes);
