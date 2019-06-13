@@ -24,9 +24,9 @@ export class AuthStorageService {
   }
 
   public saveAuthData(data: JwtResponseTO) {
-    localStorage.setItem('ssd_token', data.token);
-    localStorage.setItem('ssd_authority', data.authorities[0].name);
-    localStorage.setItem('ssd_user_email', data.username);
+    sessionStorage.setItem('ssd_token', data.token);
+    sessionStorage.setItem('ssd_authority', data.authorities[0].name);
+    sessionStorage.setItem('ssd_user_email', data.username);
 
     this.isAuthenticatedSubject.next(true);
     this.currentRoleSubject.next(data.authorities[0].name);
@@ -35,18 +35,18 @@ export class AuthStorageService {
   public signOut() {
     this.isAuthenticatedSubject.next(false);
     this.currentRoleSubject.next(null);
-    localStorage.clear();
+    sessionStorage.clear();
   }
 
   public getUserEmail(): string {
-    return localStorage.getItem('ssd_user_email');
+    return sessionStorage.getItem('ssd_user_email');
   }
 
   public getUserAuthority(): string {
-    return localStorage.getItem('ssd_authority');
+    return sessionStorage.getItem('ssd_authority');
   }
 
   public getUserToken(): string {
-    return localStorage.getItem('ssd_token');
+    return sessionStorage.getItem('ssd_token');
   }
 }
