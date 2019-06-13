@@ -1,0 +1,20 @@
+<div class="col-8 offset-2">
+  <table class="table table-striped table-bordered">
+    <thead>
+    <tr>
+      <th *ngFor="let head of headElements" scope="col">{{head}} </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let el of overview">
+      <td>{{el.conferenceInformation.topic}}</td>
+      <td>{{el.startDate}}</td>
+      <td>{{el.endDate}}</td>
+      <td>{{el.address.city}}</td>
+      <td>
+        <button type="button" class="btn btn-outline-dark" (click)="onMoreInformationClick(el.id)">More...</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
