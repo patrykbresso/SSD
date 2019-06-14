@@ -1,7 +1,7 @@
 <nav class="navbar navbar-light bg-light justify-content-center">
-  <a class="navbar-brand" href="#">Conference Management System</a>
+  <div> <a class="navbar-brand" href="#">Conference Management System</a></div>
 
-  <div *appIsAuthenticated="'true'" class="form-inline my-2 my-lg-0">
-    <button class="btn btn-outline-success my-2 my-sm-0" (click)="onSetting()" >User setting</button>
+  <div *appIsAuthenticated="'true'" class="form-inline">
+    <button class="btn btn-outline-dark" (click)="onSetting()" ><img src="assets/person.svg"></button>
   </div>
 </nav>

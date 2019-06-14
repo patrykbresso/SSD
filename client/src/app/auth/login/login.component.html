@@ -10,7 +10,7 @@
              required="required">
     </div>
 
-    <div class="form-group">
+    <div class="form-group styled-select slate">
       <select name="loginAs" formControlName="loginAs">
         <option *ngFor="let log of logAs" [value]="log" [label]="loginAsEnum[log]"></option>
       </select>

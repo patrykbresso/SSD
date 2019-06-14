@@ -1,6 +1,4 @@
 <div>
-  <button type="primary" class="btn btn-danger" (click)="onLogOut()">Sign Out</button>
-</div>
 <div *ngIf="settingForm" class="user-details-form">
   <form [formGroup]="settingForm" (ngSubmit)="onSave()">
     <div class="form-group">
@@ -25,4 +23,8 @@
       <button type="submit" class="btn btn-primary" [disabled]="!settingForm.valid">Save</button>
     </div>
   </form>
+</div>
+  <div>
+    <button type="primary" class="btn btn-danger" (click)="onLogOut()">Sign Out</button>
+  </div>
 </div>
