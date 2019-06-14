@@ -37,12 +37,12 @@
     </div>
     <div *appHasRole="'ROLE_ORGANISER'" class="row justify-content-center align-items-center">
       <div class="col-9">
-        <button type="button" class="btn btn-outline-dark">Manage Schedule</button>
+        <button [disabled]="!loggedAsConferenceOrganiser" type="button" class="btn btn-outline-dark">Manage Schedule</button>
       </div>
     </div>
     <div *appHasRole="'ROLE_ORGANISER'" class="row justify-content-center align-items-center">
       <div class="col-9">
-        <button type="button" class="btn btn-outline-dark">Cancel Conference</button>
+        <button [disabled]="!loggedAsConferenceOrganiser" type="button" class="btn btn-outline-dark">Cancel Conference</button>
       </div>
     </div>
     <div *appHasRole="'ROLE_AUTHOR'" class="row justify-content-center align-items-center">

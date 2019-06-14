@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {Conference} from "../conference";
-import {Schedule} from "../schedule";
-import {ScheduleItem} from "../schedule-item";
-import {formatDate} from "ngx-bootstrap";
-import {Author} from "../author";
+import { AuthStorageService } from './../../auth/service/auth-storage.service';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
+import { Conference } from "../conference";
+import { Schedule } from "../schedule";
+import { ScheduleItem } from "../schedule-item";
+import { formatDate } from "ngx-bootstrap";
+import { Author } from "../author";
 
 @Component({
   selector: 'app-conference-details',
@@ -13,18 +14,24 @@ import {Author} from "../author";
 })
 export class ConferenceDetailsComponent implements OnInit {
 
-  data: any;
-  conference: Conference;
-  scheduleItems: ScheduleItem[];
+  private data: any;
+  private conference: Conference;
+  private scheduleItems: ScheduleItem[];
+
+  private loggedAsConferenceOrganiser: boolean;
+  private isUserAssignToConference: boolean;
 
   constructor(
-    private route: ActivatedRoute
+    private readonly route: ActivatedRoute,
+    private readonly authStorageService: AuthStorageService
   ) { }
 
   ngOnInit() {
     this.data = this.route.snapshot.data;
     this.conference = this.data.details;
     this.scheduleItems = this.conference.schedule.presentationsAndPosters;
+
+    this.initDisabledOptions();
   }
 
   headElements = ['Presentation Title', 'Author', 'Start Date', 'Start Time', 'Duration', 'Location'];
@@ -47,5 +54,22 @@ export class ConferenceDetailsComponent implements OnInit {
     let end = Date.parse(scheduleItem.endDate);
     let diff = Math.floor(((end - start) % 86400000) / 3600000);
     return diff.toString() + ' h';
+  }
+
+  private initDisabledOptions() {
+    this.loggedAsConferenceOrganiser = this.isCurrentOrganiserLoogedIn();
+  }
+
+  private isCurrentOrganiserLoogedIn(): boolean {
+    let currentEmail = this.authStorageService.getUserEmail();
+    let emails = this.conference.organisers.map(organiser => organiser.email);
+
+    for (const email of emails) {
+      if (email === currentEmail) {
+        return true;
+      }
+    }
+
+    return false;
   }
 }

@@ -109,6 +109,8 @@ public class DataPopulatorServiceImpl {
     }
 
     public void saveConferenceWithAllData() {
+        saveOrganiser("Andrzej", "organiser1@gmail.com", "Kowalski", new ArrayList<>());
+
         OrganiserEntity organiser = saveOrganiser("Jan", "organiser@gmail.com", "Kowalski", new ArrayList<>());
         ReviewerEntity reviewer = saveReviewer("Andrzej", "reviewer@gmail.com", "Strzelba", AcademicTitle.PROFESSOR, new ArrayList<>());
 

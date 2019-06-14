@@ -1,6 +1,7 @@
-import {ConferenceInformation} from "./conference-information";
-import {Address} from "./address";
-import {Schedule} from "./schedule";
+import { ConferenceInformation } from "./conference-information";
+import { Address } from "./address";
+import { Schedule } from "./schedule";
+import { Organiser } from './organiser';
 
 //TODO: add other fields
 export class Conference {
@@ -12,4 +13,5 @@ export class Conference {
   conferenceInformation: ConferenceInformation;
   schedule: Schedule;
   address: Address;
+  organisers: Organiser[];
 }
