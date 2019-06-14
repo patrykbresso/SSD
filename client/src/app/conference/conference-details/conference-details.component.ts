@@ -1,11 +1,12 @@
 import { AuthStorageService } from './../../auth/service/auth-storage.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Conference } from "../conference";
 import { Schedule } from "../schedule";
 import { ScheduleItem } from "../schedule-item";
 import { formatDate } from "ngx-bootstrap";
 import { Author } from "../author";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-conference-details',
@@ -23,7 +24,9 @@ export class ConferenceDetailsComponent implements OnInit {
 
   constructor(
     private readonly route: ActivatedRoute,
-    private readonly authStorageService: AuthStorageService
+    private readonly authStorageService: AuthStorageService,
+    private readonly toastr: ToastrService,
+    private readonly router: Router
   ) { }
 
   ngOnInit() {
@@ -54,6 +57,42 @@ export class ConferenceDetailsComponent implements OnInit {
     let end = Date.parse(scheduleItem.endDate);
     let diff = Math.floor(((end - start) % 86400000) / 3600000);
     return diff.toString() + ' h';
+  }
+
+  private onCreateConferenceClick() {
+    this.router.navigate(['/conference-create']);
+  }
+
+  private onManageScheduleClick() {
+    this.router.navigate(['/conference/' + this.conference.id + '/schedule']);
+  }
+
+  private onCancelConferenceClick() {
+    this.toastr.warning('This functionality is not implemented yet. We are working on that.');
+  }
+
+  private onAddPosterClick() {
+    this.router.navigate(['/conference/' + this.conference.id + '/add-poster']);
+  }
+
+  private onAddPresentationClick() {
+    this.router.navigate(['/conference/' + this.conference.id + '/add-presentation']);
+  }
+
+  private onPlaceReservationClick() {
+    this.toastr.warning('This functionality is not implemented yet. We are working on that.');
+  }
+
+  private onPlaceCancellationClick() {
+    this.toastr.warning('This functionality is not implemented yet. We are working on that.');
+  }
+
+  private onRoomReservationClick() {
+    this.toastr.warning('This functionality is not implemented yet. We are working on that.');
+  }
+
+  private onRoomCancellationClick() {
+    this.toastr.warning('This functionality is not implemented yet. We are working on that.');
   }
 
   private initDisabledOptions() {

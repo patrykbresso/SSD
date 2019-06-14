@@ -32,48 +32,55 @@
     <div class="row justify-content-center align-items-center actions-text">Actions:</div>
     <div *appHasRole="'ROLE_ORGANISER'" class="row justify-content-center align-items-center">
       <div class="col-9">
-        <button type="button" class="btn btn-outline-dark">Create Conference</button>
+        <button (click)="onCreateConferenceClick()" type="button" class="btn btn-outline-dark">Create
+          Conference</button>
       </div>
     </div>
     <div *appHasRole="'ROLE_ORGANISER'" class="row justify-content-center align-items-center">
       <div class="col-9">
-        <button [disabled]="!loggedAsConferenceOrganiser" type="button" class="btn btn-outline-dark">Manage Schedule</button>
+        <button (click)="onManageScheduleClick()" [disabled]="!loggedAsConferenceOrganiser" type="button"
+          class="btn btn-outline-dark">Manage Schedule</button>
       </div>
     </div>
     <div *appHasRole="'ROLE_ORGANISER'" class="row justify-content-center align-items-center">
       <div class="col-9">
-        <button [disabled]="!loggedAsConferenceOrganiser" type="button" class="btn btn-outline-dark">Cancel Conference</button>
+        <button (click)="onCancelConferenceClick()" [disabled]="!loggedAsConferenceOrganiser" type="button"
+          class="btn btn-outline-dark">Cancel Conference</button>
       </div>
     </div>
     <div *appHasRole="'ROLE_AUTHOR'" class="row justify-content-center align-items-center">
       <div class="col-9">
-        <button type="button" class="btn btn-outline-dark">Upload Poster</button>
+        <button (click)="onAddPosterClick()" type="button" class="btn btn-outline-dark">Upload Poster</button>
       </div>
     </div>
     <div *appHasRole="'ROLE_AUTHOR'" class="row justify-content-center align-items-center">
       <div class="col-9">
-        <button type="button" class="btn btn-outline-dark">Upload Presentation</button>
+        <button (click)="onAddPresentationClick()" type="button" class="btn btn-outline-dark">Upload
+          Presentation</button>
       </div>
     </div>
 
     <div *appHasRole="'ROLE_AUTHOR or ROLE_GUEST'" class="row justify-content-center align-items-center">
       <div class="col-9">
-        <button type="button" class="btn btn-outline-dark">Reserve Place in Conference</button>
+        <button (click)="onPlaceReservationClick()" type="button" class="btn btn-outline-dark">Reserve Place in
+          Conference</button>
       </div>
     </div>
     <div *appHasRole="'ROLE_AUTHOR or ROLE_GUEST'" class="row justify-content-center align-items-center">
       <div class="col-9">
-        <button type="button" class="btn btn-outline-dark">Cancel Reservation of Place</button>
+        <button (click)="onPlaceCancellationClick()" type="button" class="btn btn-outline-dark">Cancel Reservation of
+          Place</button>
       </div>
     </div>
     <div *appHasRole="'ROLE_AUTHOR or ROLE_GUEST'" class="row justify-content-center align-items-center">
       <div class="col-9">
-        <button type="button" class="btn btn-outline-dark">Book the Room</button>
+        <button (click)="onRoomReservationClick()" type="button" class="btn btn-outline-dark">Book the Room</button>
       </div>
     </div>
     <div *appHasRole="'ROLE_AUTHOR or ROLE_GUEST'" class="row justify-content-center align-items-center">
       <div class="col-9">
-        <button type="button" class="btn btn-outline-dark">Cancel Booked Room</button>
+        <button (click)="onRoomCancellationClick()" type="button" class="btn btn-outline-dark">Cancel Booked
+          Room</button>
       </div>
     </div>
   </div>
