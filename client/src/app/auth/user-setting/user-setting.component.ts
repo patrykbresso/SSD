@@ -38,7 +38,6 @@ export class UserSettingComponent implements OnInit {
       this.authService.getUserSettingData(this.userEmail).subscribe(
         (data: UserSettingTO) => {
           this.userData = data;
-          console.log(data);
           this.initForm();
         },
         (error: any) => {
@@ -76,7 +75,6 @@ export class UserSettingComponent implements OnInit {
           this.router.navigate(['conference-overview']);
         },
         (error: any) => {
-
           this.toastr.error(error.error.message, "Ups! Something went wrong");
         }
       );
