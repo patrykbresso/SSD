@@ -57,7 +57,13 @@ public class ConferenceServiceImpl {
             return new ResponseEntity<>(new ResponseTO("Conference or user not found."), HttpStatus.BAD_REQUEST);
         }
 
+        ConferenceTO conferenceTO = mapToTO(conferenceEntity.get());
+
         if (userEntity instanceof GuestEntity) {
+            if (conferenceTO.getConferenceInformation().getAvailableSeats() <= 0) {
+                return new ResponseEntity<>(new ResponseTO("There is no seats available in this conference."), HttpStatus.BAD_REQUEST);
+            }
+
             // TODO check if guest already assigned to conference
 
             List<GuestEntity> guests = conferenceEntity.get().getGuests();
@@ -65,6 +71,9 @@ public class ConferenceServiceImpl {
             conferenceEntity.get().setGuests(guests);
             conferenceDao.save(conferenceEntity.get());
         } else if (userEntity instanceof AuthorEntity) {
+            if (conferenceTO.getConferenceInformation().getAvailableNumberOfPresentations() <= 0) {
+                return new ResponseEntity<>(new ResponseTO("There is no presentations available in this conference."), HttpStatus.BAD_REQUEST);
+            }
             // TODO check if author already assigned to conference
 
             AuthorEntity authorEntity = (AuthorEntity) userEntity;
@@ -73,7 +82,25 @@ public class ConferenceServiceImpl {
             authorEntity.setConferences(conferences);
             userDaoWrapper.saveOrUpdate(authorEntity);
         }
-        return new ResponseEntity<>(new ResponseTO("User successfully added to conference."), HttpStatus.BAD_REQUEST);
+        return ResponseEntity.ok(new ResponseTO("User successfully added to conference."));
+    }
+
+    public ResponseEntity<?> removeUserFromConference(Long conferenceId, String userEmail) {
+        UserEntity userEntity = userDaoWrapper.findByEmail(userEmail);
+        Optional<ConferenceEntity> conferenceEntity = conferenceDao.findById(conferenceId);
+
+        if (!conferenceEntity.isPresent() || userEntity == null) {
+            return new ResponseEntity<>(new ResponseTO("Conference or user not found."), HttpStatus.BAD_REQUEST);
+        }
+
+        ConferenceEntity conference = conferenceEntity.get();
+        if (userEntity instanceof GuestEntity) {
+            conference.getGuests().remove(userEntity);
+        } else if (userEntity instanceof AuthorEntity) {
+            //remove author from authors list
+            
+        }
+        return null;
     }
 
     private ConferenceTO mapToTO(ConferenceEntity entity) {
