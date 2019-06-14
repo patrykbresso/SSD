@@ -17,41 +17,38 @@ public class GuestDaoChainImp extends UserDaoChain {
 
     @Override
     public UserEntity findByEmail(String email) {
-        if(super.nextUserDao == null){
-            return null;
-        }
-
         GuestEntity guest = guestDao.findByEmail(email);
         if (guest != null) {
             return guest;
         } else {
+            if (super.nextUserDao == null) {
+                return null;
+            }
             return super.nextUserDao.findByEmail(email);
         }
     }
 
     @Override
     public UserEntity findById(Long id) {
-        if(super.nextUserDao == null){
-            return null;
-        }
-
         Optional<GuestEntity> guest = guestDao.findById(id);
         if (guest.isPresent()) {
             return guest.get();
         } else {
+            if (super.nextUserDao == null) {
+                return null;
+            }
             return super.nextUserDao.findById(id);
         }
     }
 
     @Override
     public UserEntity saveOrUpdate(UserEntity user) {
-        if(super.nextUserDao == null){
-            return null;
-        }
-
         if (user instanceof GuestEntity) {
             return guestDao.save((GuestEntity) user);
         } else {
+            if (super.nextUserDao == null) {
+                return null;
+            }
             return super.nextUserDao.saveOrUpdate(user);
         }
     }

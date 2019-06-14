@@ -17,41 +17,38 @@ public class ReviewerDaoChainImpl extends UserDaoChain {
 
     @Override
     public UserEntity findByEmail(String email) {
-        if(super.nextUserDao == null){
-            return null;
-        }
-
         ReviewerEntity reviewer = reviewerDao.findByEmail(email);
         if (reviewer != null) {
             return reviewer;
         } else {
+            if (super.nextUserDao == null) {
+                return null;
+            }
             return super.nextUserDao.findByEmail(email);
         }
     }
 
     @Override
     public UserEntity findById(Long id) {
-        if(super.nextUserDao == null){
-            return null;
-        }
-
         Optional<ReviewerEntity> reviewer = reviewerDao.findById(id);
         if (reviewer.isPresent()) {
             return reviewer.get();
         } else {
+            if (super.nextUserDao == null) {
+                return null;
+            }
             return super.nextUserDao.findById(id);
         }
     }
 
     @Override
     public UserEntity saveOrUpdate(UserEntity user) {
-        if(super.nextUserDao == null){
-            return null;
-        }
-
         if (user instanceof ReviewerEntity) {
             return reviewerDao.save((ReviewerEntity) user);
         } else {
+            if (super.nextUserDao == null) {
+                return null;
+            }
             return super.nextUserDao.saveOrUpdate(user);
         }
     }
