@@ -1,3 +1,5 @@
+import { IsNotAutenticatedGuard } from './guards/is-not-autenticated.guard';
+import { IsAutenticatedGuard } from './guards/is-autenticated.guard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -48,7 +50,9 @@ import { ConferenceDetailsResolver } from "./conference/conference-details/confe
     AuthStorageService,
     ConferencesOverviewResolver,
     ConferenceService,
-    ConferenceDetailsResolver
+    ConferenceDetailsResolver,
+    IsAutenticatedGuard,
+    IsNotAutenticatedGuard
   ],
   bootstrap: [AppComponent]
 })

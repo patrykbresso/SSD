@@ -1,3 +1,4 @@
+import { IsAutenticatedGuard } from './guards/is-autenticated.guard';
 import {Routes, RouterModule} from '@angular/router';
 import {ModuleWithProviders} from '@angular/core';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
@@ -11,12 +12,14 @@ const routes: Routes = [
   {
     path: 'conference-overview',
     component: ConferencesOverviewComponent,
-    resolve: { overview: ConferencesOverviewResolver }
+    resolve: { overview: ConferencesOverviewResolver },
+    canActivate: [IsAutenticatedGuard]
   },
   {
     path: 'conference/:id',
     component: ConferenceDetailsComponent,
-    resolve: { details: ConferenceDetailsResolver }
+    resolve: { details: ConferenceDetailsResolver },
+    canActivate: [IsAutenticatedGuard]
   },
   {path: '**', component: PageNotFoundComponent},
 ];
