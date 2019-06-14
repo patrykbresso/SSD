@@ -17,6 +17,10 @@ public class OrganiserDaoChainImpl extends UserDaoChain {
 
     @Override
     public UserEntity findByEmail(String email) {
+        if(super.nextUserDao == null){
+            return null;
+        }
+
         OrganiserEntity organiser = organiserDao.findByEmail(email);
         if (organiser != null) {
             return organiser;
@@ -27,6 +31,10 @@ public class OrganiserDaoChainImpl extends UserDaoChain {
 
     @Override
     public UserEntity findById(Long id) {
+        if(super.nextUserDao == null){
+            return null;
+        }
+
         Optional<OrganiserEntity> organiser = organiserDao.findById(id);
         if (organiser.isPresent()) {
             return organiser.get();
@@ -37,6 +45,10 @@ public class OrganiserDaoChainImpl extends UserDaoChain {
 
     @Override
     public UserEntity saveOrUpdate(UserEntity user) {
+        if(super.nextUserDao == null){
+            return null;
+        }
+
         if (user instanceof OrganiserEntity) {
             return organiserDao.save((OrganiserEntity) user);
         } else {

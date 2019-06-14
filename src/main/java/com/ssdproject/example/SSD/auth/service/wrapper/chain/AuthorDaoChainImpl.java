@@ -17,6 +17,10 @@ public class AuthorDaoChainImpl extends UserDaoChain {
 
     @Override
     public UserEntity findByEmail(String email) {
+        if(super.nextUserDao == null){
+            return null;
+        }
+
         AuthorEntity author = authorDao.findByEmail(email);
         if (author != null) {
             return author;
@@ -27,6 +31,10 @@ public class AuthorDaoChainImpl extends UserDaoChain {
 
     @Override
     public UserEntity findById(Long id) {
+        if(super.nextUserDao == null){
+            return null;
+        }
+
         Optional<AuthorEntity> author = authorDao.findById(id);
         if (author.isPresent()) {
             return author.get();
@@ -37,6 +45,10 @@ public class AuthorDaoChainImpl extends UserDaoChain {
 
     @Override
     public UserEntity saveOrUpdate(UserEntity user) {
+        if(super.nextUserDao == null){
+            return null;
+        }
+
         if (user instanceof AuthorEntity) {
             return authorDao.save((AuthorEntity) user);
         } else {

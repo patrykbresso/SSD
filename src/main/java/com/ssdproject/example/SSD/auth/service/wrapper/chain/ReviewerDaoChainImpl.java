@@ -17,6 +17,10 @@ public class ReviewerDaoChainImpl extends UserDaoChain {
 
     @Override
     public UserEntity findByEmail(String email) {
+        if(super.nextUserDao == null){
+            return null;
+        }
+
         ReviewerEntity reviewer = reviewerDao.findByEmail(email);
         if (reviewer != null) {
             return reviewer;
@@ -27,6 +31,10 @@ public class ReviewerDaoChainImpl extends UserDaoChain {
 
     @Override
     public UserEntity findById(Long id) {
+        if(super.nextUserDao == null){
+            return null;
+        }
+
         Optional<ReviewerEntity> reviewer = reviewerDao.findById(id);
         if (reviewer.isPresent()) {
             return reviewer.get();
@@ -37,6 +45,10 @@ public class ReviewerDaoChainImpl extends UserDaoChain {
 
     @Override
     public UserEntity saveOrUpdate(UserEntity user) {
+        if(super.nextUserDao == null){
+            return null;
+        }
+
         if (user instanceof ReviewerEntity) {
             return reviewerDao.save((ReviewerEntity) user);
         } else {
