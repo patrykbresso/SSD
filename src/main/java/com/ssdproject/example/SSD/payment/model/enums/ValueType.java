@@ -1,0 +1,5 @@
+package com.ssdproject.example.SSD.payment.model.enums;
+
+public enum ValueType {
+    STUDENT, STANDARD, VIP
+}
