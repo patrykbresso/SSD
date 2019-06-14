@@ -86,6 +86,7 @@ export class UserSettingComponent implements OnInit {
   private onLogOut() {
     this.authStorageService.signOut();
     this.toastr.success("You are sucessfully sign out", null, { timeOut: 1000 });
+    this.router.navigate(["/login"]);
   }
 
   private academicTitleRequired(frm: FormGroup): any {
