@@ -1,7 +1,8 @@
-<nav class="navbar navbar-light bg-light justify-content-center">
+<nav class="navbar navbar-light bg-light">
   <div> <a class="navbar-brand" href="#">Conference Management System</a></div>
 
-  <div *appIsAuthenticated="'true'" class="form-inline">
+  <div *appIsAuthenticated="'true'" class="form-inline ml-auto">
     <button class="btn btn-outline-dark" (click)="onSetting()" ><img src="assets/person.svg"></button>
+    <button id="signout-button" class="btn btn-outline-dark" (click)="onLogOut()">Sign Out</button>
   </div>
 </nav>

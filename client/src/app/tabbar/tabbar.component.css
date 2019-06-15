@@ -9,3 +9,11 @@
 button {
   border-radius: 0;
 }
+
+#signout-button {
+  height: 40.18px;
+}
+
+button {
+  margin-right: 20px;
+}

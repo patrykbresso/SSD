@@ -31,7 +31,7 @@ export class UserSettingComponent implements OnInit {
   ) {
     this.userEmail = this.route.snapshot.paramMap.get('email')
     this.academicTitles = Object.keys(this.academicTitleEnum).filter(f => !isNaN(Number(f)));
-  } ł
+  }
 
   ngOnInit() {
     if (this.userEmail) {

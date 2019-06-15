@@ -1,30 +1,41 @@
-<div>
-<div *ngIf="settingForm" class="user-details-form">
-  <form [formGroup]="settingForm" (ngSubmit)="onSave()">
-    <div class="form-group">
-      <input type="text" class="form-control" name="name" placeholder="Name" formControlName="name" required="required">
+<div *ngIf="settingForm" class="user-details-form row">
+  <div class="col-4">
+    <div class="profile-img">
+      <img
+        src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png"
+        alt=""/>
+      <div class="file btn btn-lg btn-primary">
+        Change Photo
+        <input type="file" name="file"/>
+      </div>
     </div>
-    <div class="form-group">
-      <input type="text" class="form-control" name="surname" placeholder="Surname" formControlName="surname"
-        required="required">
-    </div>
-    <div class="form-group">
-      <input type="text" class="form-control" name="url" placeholder="Image Url" formControlName="url">
-    </div>
-    <div class="form-group">
-      <input type="text" class="form-control" name="aboutMe" placeholder="About Me" formControlName="aboutMe">
-    </div>
-    <div *appHasRole="'ROLE_AUTHOR or ROLE_REVIEWER'" class="form-group">
-      <select name="academicTitle" formControlName="academicTitle">
-        <option *ngFor="let title of academicTitles" [value]="title" [label]="academicTitleEnum[title]"></option>
-      </select>
-    </div>
-    <div class="form-group">
-      <button type="submit" class="btn btn-primary" [disabled]="!settingForm.valid">Save</button>
-    </div>
-  </form>
-</div>
-  <div>
-    <button type="primary" class="btn btn-danger" (click)="onLogOut()">Sign Out</button>
+  </div>
+  <div class="col-8">
+    <form [formGroup]="settingForm" (ngSubmit)="onSave()" class="col-12">
+      <div *appHasRole="'ROLE_AUTHOR or ROLE_REVIEWER'" class="form-group">
+        <select name="academicTitle" formControlName="academicTitle" class="styled-select">
+          <option *ngFor="let title of academicTitles" [value]="title" [label]="academicTitleEnum[title]"></option>
+        </select>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" name="name" placeholder="Name" formControlName="name"
+               required="required">
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" name="surname" placeholder="Surname" formControlName="surname"
+               required="required">
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" name="url" placeholder="Image Url" formControlName="url">
+      </div>
+      <div class="form-group">
+        <textarea type="text" class="form-control" name="aboutMe" placeholder="About Me" rows="5"
+                  formControlName="aboutMe"></textarea>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary" [disabled]="!settingForm.valid">Save</button>
+      </div>
+    </form>
   </div>
 </div>
+
